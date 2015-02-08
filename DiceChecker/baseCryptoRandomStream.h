@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef BASECRYPTORANDOMSTREAM_HPP
@@ -49,10 +50,15 @@ namespace DiceLockSecurity {
 		NotDefined,
 	};
 
-	struct bitItem {
-		unsigned char bit:1;
-		bitItem (unsigned int) {}
-		operator int() {return bit;}
+	struct byteBits {
+		unsigned char bit0:1;
+		unsigned char bit1:1;
+		unsigned char bit2:1;
+		unsigned char bit3:1;
+		unsigned char bit4:1;
+		unsigned char bit5:1;
+		unsigned char bit6:1;
+		unsigned char bit7:1;
 	};
 
 	class BaseCryptoRandomStream abstract {
@@ -62,7 +68,8 @@ namespace DiceLockSecurity {
 			unsigned long int	bitLength;
 			unsigned long int	reducedBitLength;
 			unsigned long int	position;
-			bitItem* 			cryptoStream;
+public:
+			unsigned char * 	cryptoStream;
 
 		public:
 
@@ -73,7 +80,7 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC BaseCryptoRandomStream(unsigned long int) {};
 
 			// Constructor, sets the pointed stream of the indicated length 
-			CLASS_DECLSPEC BaseCryptoRandomStream(unsigned char*, unsigned long int) {};
+			CLASS_DECLSPEC BaseCryptoRandomStream(void*, unsigned long int) {};
 
 			// Destructor
 			CLASS_DECLSPEC virtual ~BaseCryptoRandomStream();
@@ -103,25 +110,25 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC virtual void SetCryptoRandomStreamBit(unsigned long int) {};
 
 			// Set the pointed stream of indicated length in bits
-			CLASS_DECLSPEC virtual void SetCryptoRandomStreamBit(unsigned char*, unsigned long int) {};
+			CLASS_DECLSPEC virtual void SetCryptoRandomStreamBit(void*, unsigned long int) {};
 
 			// Sets an empty stream with the indicated length in unsigned chars
 			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUC(unsigned long int) {};
 
 			// Set the pointed stream of indicated length in unsigned chars
-			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUC(unsigned char*, unsigned long int) {};
+			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUC(void*, unsigned long int) {};
 
 			// Sets an empty stream with the indicated length in unsigned shorts
 			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUS(unsigned long int) {};
 
 			// Set the pointed stream of indicated length in unsigned shorts
-			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUS(unsigned char*, unsigned long int) {};
+			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUS(void*, unsigned long int) {};
 
 			// Sets an empty stream with the indicated length in unsigned long int
 			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUL(unsigned long int) {};
 
 			// Set the pointed stream of indicated length in unsigned long int
-			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUL(unsigned char*, unsigned long int) {};
+			CLASS_DECLSPEC virtual void SetCryptoRandomStreamUL(void*, unsigned long int) {};
 
 			// Set the pointed stream as hexadecimal string
 			CLASS_DECLSPEC virtual void SetCryptoRandomStreamHexString(const char*) {};
@@ -130,22 +137,19 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC void* GetCryptoRandomStreamMemory(void);
 
 			// Sets the BaseCryptoRandomStream bit at current position and moves pointer to the following bit
-			CLASS_DECLSPEC void SetBitForward(unsigned short int);
+			CLASS_DECLSPEC void SetBitForward(unsigned char);
 
 			// Sets the BaseCryptoRandomStream bit at current position and moves pointer to the previous bit
-			CLASS_DECLSPEC void SetBitReverse(unsigned short int);
-
-			// Gets the BaseCryptoRandomStream bit at a specified position
-			CLASS_DECLSPEC unsigned short int GetBitPosition(unsigned long int);
+			CLASS_DECLSPEC void SetBitReverse(unsigned char);
 
 			// Gets the BaseCryptoRandomStream bit at current position and moves pointer to the following bit
-			CLASS_DECLSPEC unsigned short int GetBitForward(void);
+			CLASS_DECLSPEC unsigned char GetBitForward(void);
 
 			// Gets the BaseCryptoRandomStream bit at current position and moves pointer to the previous bit
-			CLASS_DECLSPEC unsigned short int GetBitReverse(void);
+			CLASS_DECLSPEC unsigned char GetBitReverse(void);
 
 			// Sets the stream to an specified bit value (0 or 1)
-			CLASS_DECLSPEC void FillBit(unsigned short int);
+			CLASS_DECLSPEC void FillBit(unsigned char);
 			
 			// Sets the stream to an specified bit unsigned char value
 			CLASS_DECLSPEC void FillUC(unsigned char);
@@ -155,6 +159,9 @@ namespace DiceLockSecurity {
 			
 			// Sets the stream to an specified bit unsigned long int value
 			CLASS_DECLSPEC void FillUL(unsigned long int);
+
+			// Sets the bit unsigned char (value 0 or 1) at specified postion, position based in array of bits
+			CLASS_DECLSPEC void SetBitPosition(unsigned long int, unsigned char);
 
 			// Sets the unsigned char at specified postion, position based in array of unsigned char
 			CLASS_DECLSPEC void SetUCPosition(unsigned long int, unsigned char);
@@ -168,6 +175,9 @@ namespace DiceLockSecurity {
 			// Sets the unsigned 64 bit at specified postion, position based in array of unsigned __int64
 			CLASS_DECLSPEC void Set64Position(unsigned __int64, unsigned __int64);
 			
+			// Gets the bit unsigned char (vakue  0 or 1) at specified postion, position based in array of bits
+			CLASS_DECLSPEC unsigned char GetBitPosition(unsigned long int);
+
 			// Gets the unsigned char at specified postion, position based in array of unsigned char
 			CLASS_DECLSPEC unsigned char GetUCPosition(unsigned long int);
 

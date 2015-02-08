@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,7 +16,7 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef RANDOMTESTSUITE_HPP
@@ -98,9 +98,6 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC void AddRankTest(void);
 
 			// Creates and adds the defined random test to the suite
-			CLASS_DECLSPEC void AddOverlappingTemplateMatchingsTest(void);
-
-			// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddUniversalTest(void);
 
 			// Creates and adds the defined random test to the suite
@@ -111,9 +108,6 @@ namespace DiceLockSecurity {
 
 			// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddDiscreteFourierTransformTest(void);
-
-			// Creates and adds the defined random test to the suite
-			CLASS_DECLSPEC void AddLinearComplexityTest(void);
 
 			// GETTING RANDOM TESTS
 			
@@ -142,9 +136,6 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC RankTest* GetRankTest(void);
 
 			// Gets the defined random test to the suite
-			CLASS_DECLSPEC OverlappingTemplateMatchingsTest* GetOverlappingTemplateMatchingsTest(void);
-
-			// Gets the defined random test to the suite
 			CLASS_DECLSPEC UniversalTest* GetUniversalTest(void);
 
 			// Gets the defined random test to the suite
@@ -155,9 +146,6 @@ namespace DiceLockSecurity {
 
 			// Gets the defined random test to the suite
 			CLASS_DECLSPEC DiscreteFourierTransformTest* GetDiscreteFourierTransformTest(void);
-
-			// Gets the defined random test to the suite
-			CLASS_DECLSPEC LinearComplexityTest* GetLinearComplexityTest(void);
 
 			// REMOVING RANDOM TESTS
 
@@ -192,9 +180,6 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC void RemoveRankTest(void);
 
 			// Removes the defined random test to the suite
-			CLASS_DECLSPEC void RemoveOverlappingTemplateMatchingsTest(void);
-
-			// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveUniversalTest(void);
 
 			// Removes the defined random test to the suite
@@ -205,9 +190,6 @@ namespace DiceLockSecurity {
 
 			// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveDiscreteFourierTransformTest(void);
-
-			// Removes the defined random test to the suite
-			CLASS_DECLSPEC void RemoveLinearComplexityTest(void);
 
 			// CHECKING RANDOMNESS
 
@@ -255,4 +237,3 @@ namespace DiceLockSecurity {
 }
 
 #endif
-

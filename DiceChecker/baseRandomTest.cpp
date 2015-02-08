@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -68,6 +69,7 @@ namespace DiceLockSecurity {
 		}
 		this->alpha = 0.0;
 		this->pValue = 0.0;
+		this->mathFuncs = NULL;
 		this->random = false;
 	}
 
@@ -124,4 +126,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-

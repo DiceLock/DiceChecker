@@ -42,10 +42,9 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;DICELOCKCIPHER_EXPORTS"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="0"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -61,10 +60,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				LinkTimeCodeGeneration="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -137,8 +135,8 @@
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				OptimizeReferences="0"
-				EnableCOMDATFolding="0"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -209,19 +207,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\linearComplexityTest.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\longestRunOfOnesTest.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\mathematicalFunctions.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\overlappingTemplateMatchingsTest.cpp"
 				>
 			</File>
 			<File
@@ -283,15 +273,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\diceLockMemoryLeak.h"
+				>
+			</File>
+			<File
 				RelativePath=".\discreteFourierTransformTest.h"
 				>
 			</File>
 			<File
 				RelativePath=".\frequencyTest.h"
-				>
-			</File>
-			<File
-				RelativePath=".\linearComplexityTest.h"
 				>
 			</File>
 			<File
@@ -303,10 +293,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\overlappingTemplateMatchingsTest.h"
-				>
-			</File>
-			<File
 				RelativePath=".\randomTestSuite.h"
 				>
 			</File>
@@ -315,15 +301,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\resource.h"
-				>
-			</File>
-			<File
 				RelativePath=".\runsTest.h"
 				>
 			</File>
 			<File
 				RelativePath=".\serialTest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stdafx.h"
 				>
 			</File>
 			<File

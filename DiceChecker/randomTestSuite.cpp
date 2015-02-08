@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,7 +16,7 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -150,12 +150,6 @@ namespace DiceLockSecurity {
 						this->instantiatedTests++;
 					}
 					break;
-				case OverlappingTemplateMatchings: 
-					if (this->suite[OverlappingTemplateMatchings] == NULL) {
-						this->suite[OverlappingTemplateMatchings] = new OverlappingTemplateMatchingsTest(this->mathFunctions);
-						this->instantiatedTests++;
-					}
-					break;
 				case Universal: 
 					if (this->suite[Universal] == NULL) {
 						this->suite[Universal] = new UniversalTest(this->mathFunctions);
@@ -180,12 +174,6 @@ namespace DiceLockSecurity {
 						this->instantiatedTests++;
 					}
 					break;
-				case LinearComplexity: 
-					if (this->suite[LinearComplexity] == NULL) {
-						this->suite[LinearComplexity] = new LinearComplexityTest(this->mathFunctions);
-						this->instantiatedTests++;
-					}
-					break;
 				default:
 					break;
 			}
@@ -203,12 +191,10 @@ namespace DiceLockSecurity {
 			this->suite[CumulativeSumForward] = new CumulativeSumForwardTest(this->mathFunctions);
 			this->suite[CumulativeSumReverse] = new CumulativeSumReverseTest(this->mathFunctions);
 			this->suite[Rank] = new RankTest(this->mathFunctions);
-			this->suite[OverlappingTemplateMatchings] = new OverlappingTemplateMatchingsTest(this->mathFunctions);
 			this->suite[Universal] = new UniversalTest(this->mathFunctions);
 			this->suite[ApproximateEntropy] = new ApproximateEntropyTest(this->mathFunctions);
 			this->suite[Serial] = new SerialTest(this->mathFunctions);
 			this->suite[DiscreteFourierTransform] = new DiscreteFourierTransformTest(this->mathFunctions);
-			this->suite[LinearComplexity] = new LinearComplexityTest(this->mathFunctions);
 			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
 				this->selfCreatedTest[i] = true;
 			}
@@ -273,14 +259,6 @@ namespace DiceLockSecurity {
 		}
 
 		// Creates and adds the defined random test to the suite
-		void RandomTestSuite::AddOverlappingTemplateMatchingsTest(void) {
-
-			this->suite[OverlappingTemplateMatchings] = new OverlappingTemplateMatchingsTest(this->mathFunctions);
-			this->selfCreatedTest[OverlappingTemplateMatchings] = true;
-			this->instantiatedTests++;
-		}
-
-		// Creates and adds the defined random test to the suite
 		void RandomTestSuite::AddUniversalTest(void) {
 
 			this->suite[Universal] = new UniversalTest(this->mathFunctions);
@@ -312,14 +290,6 @@ namespace DiceLockSecurity {
 			this->instantiatedTests++;
 		}
 
-		// Creates and adds the defined random test to the suite
-		void RandomTestSuite::AddLinearComplexityTest(void) {
-
-			this->suite[LinearComplexity] = new LinearComplexityTest(this->mathFunctions);
-			this->selfCreatedTest[LinearComplexity] = true;
-			this->instantiatedTests++;
-		}
-	
 		// GETTING RANDOM TESTS
 			
 		// Gets a random test to the suite based in the enumerated random tests
@@ -371,12 +341,6 @@ namespace DiceLockSecurity {
 		}
 
 		// Gets the defined random test to the suite
-		OverlappingTemplateMatchingsTest* RandomTestSuite::GetOverlappingTemplateMatchingsTest(void) {
-
-			return (OverlappingTemplateMatchingsTest *)this->suite[OverlappingTemplateMatchings];
-		}
-
-		// Gets the defined random test to the suite
 		UniversalTest* RandomTestSuite::GetUniversalTest(void) {
 
 			return (UniversalTest *)this->suite[Universal];
@@ -398,12 +362,6 @@ namespace DiceLockSecurity {
 		DiscreteFourierTransformTest* RandomTestSuite::GetDiscreteFourierTransformTest(void) {
 
 			return (DiscreteFourierTransformTest *)this->suite[DiscreteFourierTransform];
-		}
-
-		// Gets the defined random test to the suite
-		LinearComplexityTest* RandomTestSuite::GetLinearComplexityTest(void) {
-
-			return (LinearComplexityTest *)this->suite[LinearComplexity];
 		}
 
 		// REMOVING RANDOM TESTS
@@ -544,19 +502,6 @@ namespace DiceLockSecurity {
 		}
 
 		// Removes the defined random test to the suite
-		void RandomTestSuite::RemoveOverlappingTemplateMatchingsTest(void) {
-
-			if (this->suite[OverlappingTemplateMatchings] != NULL) {
-				if (this->selfCreatedTest[OverlappingTemplateMatchings]) {
-					delete this->suite[OverlappingTemplateMatchings];
-				}
-				this->suite[OverlappingTemplateMatchings] = NULL;
-			    this->selfCreatedTest[OverlappingTemplateMatchings] = false;
-				this->instantiatedTests--;
-			}
-		}
-
-		// Removes the defined random test to the suite
 		void RandomTestSuite::RemoveUniversalTest(void) {
 
 			if (this->suite[Universal] != NULL) {
@@ -604,19 +549,6 @@ namespace DiceLockSecurity {
 				}
 				this->suite[DiscreteFourierTransform] = NULL;
 			    this->selfCreatedTest[DiscreteFourierTransform] = false;
-				this->instantiatedTests--;
-			}
-		}
-
-		// Removes the defined random test to the suite
-		void RandomTestSuite::RemoveLinearComplexityTest(void) {
-
-			if (this->suite[LinearComplexity] != NULL) {
-				if (this->selfCreatedTest[LinearComplexity]) {
-					delete this->suite[LinearComplexity];
-				}
-				this->suite[LinearComplexity] = NULL;
-			    this->selfCreatedTest[LinearComplexity] = false;
 				this->instantiatedTests--;
 			}
 		}
@@ -743,4 +675,3 @@ namespace DiceLockSecurity {
 		}
 	}
 }
-

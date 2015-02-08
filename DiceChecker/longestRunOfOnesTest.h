@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -17,7 +17,7 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef LONGESTRUNOFONES_HPP
@@ -76,6 +76,9 @@ namespace DiceLockSecurity {
 			// Destructor
 			CLASS_DECLSPEC ~LongestRunOfOnesTest();
 
+			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			CLASS_DECLSPEC bool IsRandom(void);
+
 			// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
@@ -113,4 +116,3 @@ namespace DiceLockSecurity {
 }
 
 #endif
-

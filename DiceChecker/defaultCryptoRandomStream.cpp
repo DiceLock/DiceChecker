@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -43,11 +44,11 @@ namespace DiceLockSecurity {
 		this->position = 0;
 	}
 
-	// Constructor, creates an empty stream with the indicated length 
+	// Constructor, creates an empty stream with the indicated bit length 
 	DefaultCryptoRandomStream::DefaultCryptoRandomStream(unsigned long int streamLength) {
 
 		try {
-			this->cryptoStream = (bitItem*)calloc(streamLength,sizeof(bitItem));
+			this->cryptoStream = (unsigned char *)calloc(streamLength,sizeof(byteBits));
 			if (this->cryptoStream == NULL )
 				throw "Memory allocation failure!";
 			else {
@@ -61,12 +62,12 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	// Constructor, sets the pointed stream of the indicated length 
-	DefaultCryptoRandomStream::DefaultCryptoRandomStream(unsigned char* stream, unsigned long int streamLength) {
+	// Constructor, sets the pointed stream of the indicated length in bits
+	DefaultCryptoRandomStream::DefaultCryptoRandomStream(void* stream, unsigned long int streamLength) {
 
 		if ( stream != NULL ) {
 			this->bitLength = streamLength;
-			this->cryptoStream = (bitItem *)stream;
+			this->cryptoStream = (unsigned char *)stream;
 			this->autoMemory = false;
 		}
 	}
@@ -88,7 +89,12 @@ namespace DiceLockSecurity {
 
 		if (this->cryptoStream == NULL) {
 			try {
-				this->cryptoStream = (bitItem*)calloc(streamLength,sizeof(bitItem));
+				if (streamLength % BYTEBITS) {
+					this->cryptoStream = (unsigned char *)calloc(streamLength/BYTEBITS + 1,sizeof(byteBits));
+				}
+				else {
+					this->cryptoStream = (unsigned char *)calloc(streamLength/BYTEBITS,sizeof(byteBits));
+				}
 				if (this->cryptoStream == NULL )
 					throw "Memory allocation failure!";
 				else {
@@ -108,7 +114,7 @@ namespace DiceLockSecurity {
 
 		if (stream != NULL) {
 			this->bitLength = streamLength;
-			this->cryptoStream = (bitItem *)stream;
+			this->cryptoStream = (unsigned char *)stream;
 			this->autoMemory = false;
 		}
 	}
@@ -118,7 +124,7 @@ namespace DiceLockSecurity {
 
 		if (this->cryptoStream == NULL) {
 			try {
-				this->cryptoStream = (bitItem*)calloc(streamLength,sizeof(unsigned char));
+				this->cryptoStream = (unsigned char *)calloc(streamLength,sizeof(unsigned char));
 				if (this->cryptoStream == NULL )
 					throw "Memory allocation failure!";
 				else {
@@ -138,7 +144,7 @@ namespace DiceLockSecurity {
 
 		if (stream != NULL) {
 			this->bitLength = streamLength * BYTEBITS * sizeof(unsigned char);
-			this->cryptoStream = (bitItem *)stream;
+			this->cryptoStream = (unsigned char *)stream;
 			this->autoMemory = false;
 		}
 	}
@@ -148,7 +154,7 @@ namespace DiceLockSecurity {
 
 		if (this->cryptoStream == NULL) {
 			try {
-				this->cryptoStream = (bitItem*)calloc(streamLength,sizeof(unsigned short int));
+				this->cryptoStream = (unsigned char *)calloc(streamLength,sizeof(unsigned short int));
 				if (this->cryptoStream == NULL )
 					throw "Memory allocation failure!";
 				else {
@@ -168,7 +174,7 @@ namespace DiceLockSecurity {
 
 		if (stream != NULL) {
 			this->bitLength = streamLength * BYTEBITS * sizeof(unsigned short int);
-			this->cryptoStream = (bitItem *)stream;
+			this->cryptoStream = (unsigned char *)stream;
 			this->autoMemory = false;
 		}
 	}
@@ -178,7 +184,7 @@ namespace DiceLockSecurity {
 
 		if (this->cryptoStream == NULL) {
 			try {
-				this->cryptoStream = (bitItem*)calloc(streamLength,sizeof(unsigned long int));
+				this->cryptoStream = (unsigned char *)calloc(streamLength,sizeof(unsigned long int));
 				if (this->cryptoStream == NULL )
 					throw "Memory allocation failure!";
 				else {
@@ -198,7 +204,7 @@ namespace DiceLockSecurity {
 
 		if (stream != NULL) {
 			this->bitLength = streamLength * BYTEBITS * sizeof(unsigned long int);
-			this->cryptoStream = (bitItem *)stream;
+			this->cryptoStream = (unsigned char *)stream;
 			this->autoMemory = false;
 		}
 	}
@@ -215,7 +221,7 @@ namespace DiceLockSecurity {
 			}
 			else {
 				lengthUC = streamLength / 2;
-				this->cryptoStream = (bitItem*)calloc( lengthUC, sizeof(unsigned char));
+				this->cryptoStream = (unsigned char *)calloc( lengthUC, sizeof(unsigned char));
 				if (this->cryptoStream == NULL ) 
 					throw "Memory allocation failure!";
 				else {

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -17,7 +17,7 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef DISCRETEFOURIERTRANSFORMTEST_HPP
@@ -58,11 +58,11 @@ namespace DiceLockSecurity {
 			double      expectedPeaks;
 			double      normalizedDifference;
 
-			void drfti1(int, double *, double *);
-			void dradf2(int,int,double *,double *,double *);
-			void dradf4(int ,int ,double *,double *,double *,double *,double *);
-			void drftf1(int,double *,double *,double *,double *);
-			void dradfg(int,int,int,int,double *,double *,double *,double *,double *,double *);
+			void drfti1(int, double *, int *);
+			void dradf2(int, int, double *, double *, double *);
+			void dradf4(int, int, double *, double *, double *, double *, double *);
+			void drftf1(int, double *, double *, double *, int *);
+			void dradfg(int, int, int, int, double *, double *, double *, double *, double *, double *);
 
 		public:
 
@@ -74,6 +74,9 @@ namespace DiceLockSecurity {
 
 			// Destructor
 			CLASS_DECLSPEC ~DiscreteFourierTransformTest();
+
+			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			CLASS_DECLSPEC bool IsRandom(void);
 
 			// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
@@ -103,4 +106,3 @@ namespace DiceLockSecurity {
 }
 
 #endif
-

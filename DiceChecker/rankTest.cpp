@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -80,6 +81,12 @@ namespace DiceLockSecurity {
 		f32 = 0.0;
 	}
 	
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool RankTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool RankTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		int        r;
@@ -87,7 +94,7 @@ namespace DiceLockSecurity {
 		int        i, k;
 		double     arg1;
 		double     R;					
-		bitItem** matrix = CreateMatrix(32, 32);
+		unsigned char** matrix = CreateMatrix(32, 32);
 	
 
 		if (matrix != NULL) {
@@ -134,7 +141,7 @@ namespace DiceLockSecurity {
     				this->random = false;
 				}
 				else {
-					this->random = 1;
+					this->random = true;
 				}
 				for(i = 0; i < 32; i++)			
 					free(matrix[i]);
@@ -232,17 +239,17 @@ namespace DiceLockSecurity {
 	}
 
 	// Create Matrix 
-	bitItem** RankTest::CreateMatrix(int M, int Q) {
+	unsigned char** RankTest::CreateMatrix(int M, int Q) {
 		int i;
-		bitItem **matrix;	
+		unsigned char** matrix;	
 
-		if ((matrix = (bitItem**) calloc(M, sizeof(bitItem *))) == NULL) {
+		if ((matrix = (unsigned char**) calloc(M, sizeof(unsigned char *))) == NULL) {
 			this->error = InsufficientMemory;
 			return matrix;	
 		}
 		else {
 			for (i = 0; i < M; i++) {
-				if ((matrix[i] = (bitItem*)calloc(Q, sizeof(bitItem))) == NULL) {
+				if ((matrix[i] = (unsigned char*)calloc(Q, sizeof(unsigned char))) == NULL) {
 					this->error = InsufficientMemory;
         			return NULL;
 				}
@@ -252,18 +259,18 @@ namespace DiceLockSecurity {
 	}
 
 	// Define Matrix 
-	void RankTest::DefineMatrix(BaseCryptoRandomStream* stream, int M, int Q, bitItem** m,int k) {
+	void RankTest::DefineMatrix(BaseCryptoRandomStream* stream, int M, int Q, unsigned char** m,int k) {
 		int   i,j;
   
 		for (i = 0; i < M; i++) 
 			for (j = 0; j < Q; j++) { 
-				m[i][j].bit = stream->GetBitPosition(k*(M*Q)+j+i*M);
+				m[i][j] = stream->GetBitPosition(k*(M*Q)+j+i*M);
 			}
 		return;
 	}
 
 	// Deletes matrix 
-	void RankTest::DeleteMatrix(int M, bitItem** matrix) {
+	void RankTest::DeleteMatrix(int M, unsigned char** matrix) {
 		int i;
   
 		for (i = 0; i < M; i++)
@@ -272,13 +279,13 @@ namespace DiceLockSecurity {
 	}
 
 	// Computes rank 
-	int RankTest::ComputeRank(int M, int Q, bitItem** matrix) {
+	int RankTest::ComputeRank(int M, int Q, unsigned char** matrix) {
 		int i;
 		int rank;
 		int m = MIN(M,Q);
 
 		for(i = 0; i < m-1; i++) {
-			if (matrix[i][i].bit == 1) 
+			if (matrix[i][i] == 1) 
 				PerformElementaryRowOperations(0, i, M, Q, matrix);
 			else { 	
 				if (FindUnitElementAndSwap(0, i, M, Q, matrix) == 1) 
@@ -286,7 +293,7 @@ namespace DiceLockSecurity {
 			}	
 	   }	
 		for(i = m-1; i > 0; i--) {
-			if (matrix[i][i].bit == 1)
+			if (matrix[i][i] == 1)
 				PerformElementaryRowOperations(1, i, M, Q, matrix);
 			else { 	
 				if (FindUnitElementAndSwap(1, i, M, Q, matrix) == 1) 
@@ -298,39 +305,39 @@ namespace DiceLockSecurity {
 	}	
 
 	// Perform Elementary Row Operations
-	void RankTest::PerformElementaryRowOperations(int flag, int i, int M, int Q, bitItem** A) {
+	void RankTest::PerformElementaryRowOperations(int flag, int i, int M, int Q, unsigned char** A) {
 		int j,k;
 
 		switch(flag) { 
 			case 0: for(j = i+1; j < M;  j++)
-						if (A[j][i].bit == 1) 
+						if (A[j][i] == 1) 
 							for(k = i; k < Q; k++) 
-								A[j][k].bit = (A[j][k].bit + A[i][k].bit) % 2;
+								A[j][k] = (A[j][k] + A[i][k]) % 2;
 					break;
 			case 1: for(j = i-1; j >= 0;  j--)
-						if (A[j][i].bit == 1)
+						if (A[j][i] == 1)
 							for(k = 0; k < Q; k++)
-								A[j][k].bit = (A[j][k].bit + A[i][k].bit) % 2;
+								A[j][k] = (A[j][k] + A[i][k]) % 2;
 					break;
 		}
 		return;
 	}
 
 	// Find Unit Element And Swap
-	int	RankTest::FindUnitElementAndSwap(int flag, int i, int M, int Q, bitItem** A) { 
+	int	RankTest::FindUnitElementAndSwap(int flag, int i, int M, int Q, unsigned char** A) { 
 		int index;
 		int row_op = 0;
 
 		switch(flag) {
 			case 0: index = i+1;
-					while ((index < M) && (A[index][i].bit == 0)) 
+					while ((index < M) && (A[index][i] == 0)) 
 						index++;
 					if (index < M) 
 					row_op = SwapRows(i,index,Q,A);
 					break;
 			case 1:
 					index = i-1;
-					while ((index >= 0) && (A[index][i].bit == 0)) 
+					while ((index >= 0) && (A[index][i] == 0)) 
 						index--;
 					if (index >= 0) 
 						row_op = SwapRows(i,index,Q,A);
@@ -340,27 +347,27 @@ namespace DiceLockSecurity {
 	}
 
 	// Swap Rows 
-	int	RankTest::SwapRows(int i, int index, int Q, bitItem** A) {
+	int	RankTest::SwapRows(int i, int index, int Q, unsigned char** A) {
 		int p;
-		short temp;
+		unsigned char temp;
 
 		for(p = 0; p < Q; p++) {
-			temp = A[i][p].bit;
-			A[i][p].bit = A[index][p].bit;
-			A[index][p].bit = temp;
+			temp = A[i][p];
+			A[i][p] = A[index][p];
+			A[index][p] = temp;
 		}
 		return 1;
 	}
 
 	// Determine Rank 
-	int	RankTest::DetermineRank(int m, int M, int Q, bitItem** A) {
+	int	RankTest::DetermineRank(int m, int M, int Q, unsigned char** A) {
 		int i, j, rank, allZeroes;
 
 		rank = m;
 		for(i = 0; i < M; i++) {
 			allZeroes = 1; 
 			for(j=0; j < Q; j++) {
-				if (A[i][j].bit == 1) {
+				if (A[i][j] == 1) {
 					allZeroes = 0;
 					break;
 				}
@@ -371,4 +378,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-

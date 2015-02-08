@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,14 +15,16 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "discreteFourierTransformTest.h"
+
 
 using namespace std;
 
@@ -68,11 +70,19 @@ namespace DiceLockSecurity {
 		normalizedDifference = 0.0;
 	}
 
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool DiscreteFourierTransformTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool DiscreteFourierTransformTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		double   upperBound, *m, *X;
+		double   upperBound;
+		double   *m, *X;
 		int      i, count;
-		double*  wsave, *ifac;
+		double	 *wsave;
+		int      *ifac;
 	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -80,36 +90,39 @@ namespace DiceLockSecurity {
 			return this->random;
 		}
 		this->error = NoError;
-		if (((X = (double*)calloc(bitStream->GetBitLength()+1,sizeof(double))) == NULL) ||
-			((wsave = (double*)calloc(2*bitStream->GetBitLength()+15,sizeof(double))) == NULL) ||
-			((ifac = (double*)calloc(15,sizeof(double))) == NULL) ||
+		if (((X = (double*)calloc(bitStream->GetBitLength(),sizeof(double))) == NULL) ||
+			((wsave = (double*)calloc(2*bitStream->GetBitLength(),sizeof(double))) == NULL) ||
+			((ifac = (int*)calloc(15,sizeof(int))) == NULL) ||
 			((m = (double*)calloc((bitStream->GetBitLength()/2)+1, sizeof(double))) == NULL) ) {
-    			this->random = false;
     			this->error = InsufficientMemory;
     			if (X != NULL) free(X);
     			if (wsave != NULL) free(wsave);
     			if (ifac != NULL) free(ifac);
     			if (m != NULL) free(m);
+    			this->random = false;
     			return this->random;
 		}
 		else {
 			for (i = 0; i < (int)bitStream->GetBitLength(); i++)
 				X[i] = 2*(int)bitStream->GetBitPosition(i) - 1;
-			this->drfti1(bitStream->GetBitLength(), wsave+bitStream->GetBitLength(), ifac);
+			this->drfti1(bitStream->GetBitLength(), wsave + bitStream->GetBitLength(), ifac);
 			this->drftf1(bitStream->GetBitLength(),X,wsave,wsave+bitStream->GetBitLength(),ifac);
-			m[0] = sqrt(X[0]*X[0]);	    
+			m[0] = sqrt(X[0] * X[0]);	    
 			for (i = 0; i < (int)bitStream->GetBitLength()/2; i++) {
-				m[i+1] = sqrt(pow(X[2*i+1],2)+pow(X[2*i+2],2)); 
+				m[i+1] = sqrt(pow(X[2*i+1], 2) + pow(X[2*i + 2], 2)); 
 			}
 			count = 0;				       
-			upperBound = sqrt((long double)3*bitStream->GetBitLength());
-			for (i = 0; i < (int)bitStream->GetBitLength()/2; i++)
-				if (m[i] < upperBound) count++;
-			this->percentile = (double)count/(bitStream->GetBitLength()/2)*100;
+			upperBound = sqrt(2.995732274 * bitStream->GetBitLength());
+			for (i = 0; i < (int)bitStream->GetBitLength()/2; i++) {
+				if (m[i] < upperBound) {
+					count++;
+				}
+			}
+			this->percentile = (double)count/(bitStream->GetBitLength()/2) * 100;
 			this->observedPeaks = (double) count;       
-			this->expectedPeaks = (double) 0.95*bitStream->GetBitLength()/2.0;
-			this->normalizedDifference = (this->observedPeaks - this->expectedPeaks)/sqrt(bitStream->GetBitLength()/2.0*0.95*0.05);
-			this->pValue = this->mathFuncs->ErFc(fabs(this->normalizedDifference)/sqrt(2.));
+			this->expectedPeaks = (double) 0.95 * bitStream->GetBitLength()/2.0;
+			this->normalizedDifference = (this->observedPeaks - this->expectedPeaks)/sqrt(bitStream->GetBitLength()/4.0 * 0.95 * 0.05);
+			this->pValue = this->mathFuncs->ErFc(fabs(this->normalizedDifference)/sqrt(2.0));
 			if (this->pValue < this->alpha) {				    
     			this->random = false;
 			}
@@ -170,7 +183,7 @@ namespace DiceLockSecurity {
 		return this->normalizedDifference;
 	}
 
-	void DiscreteFourierTransformTest::drfti1(int n, double *wa, double *ifac) {
+	void DiscreteFourierTransformTest::drfti1(int n, double* wa, int* ifac) {
 		double arg,argh,argld,fi;
 		int ntry = 0,i,j = 0;
 		int k1, l1, l2, ib;
@@ -235,7 +248,7 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	void DiscreteFourierTransformTest::drftf1(int n,double *c,double *ch,double *wa,double *ifac) {
+	void DiscreteFourierTransformTest::drftf1(int n, double *c, double *ch, double *wa, int *ifac) {
 		int i,k1,l1,l2;
 		int na,kh,nf;
 		int ip,iw,ido,idl1,ix2,ix3;
@@ -691,4 +704,3 @@ namespace DiceLockSecurity {
 	}
   }
  }
-

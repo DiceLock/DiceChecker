@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -88,32 +89,40 @@ namespace DiceLockSecurity {
 		free(assignment);
 	}
 	
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool LongestRunOfOnesTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool LongestRunOfOnesTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		double run = 0, v_n_obs = 0;
-		int    i = 0, j = 0;
-		double pi[7];
-		double k[7];
-		double K;
-		unsigned int sum, nu[7];
+		double	run = 0, v_n_obs = 0, sum = 0;
+		double	pi[7];
+		int		K;
+		int		i = 0, j = 0;
+		int		k[7];
+		unsigned int nu[7] = {0, 0, 0, 0, 0, 0, 0};
 
-		switch (this->longRunCase) {
-		case 8:   
-		  		K = 3;
-	  			substringLength = 8;
-	  			pi[0] = 0.21484375;
-	  			pi[1] = 0.3671875;
-	  			pi[2] = 0.23046875;
-	  			pi[3] = 0.1875;
-	  			k[0] = 1;
-	  			k[1] = 2;
-	  			k[2] = 3;
-	  			k[3] = 8;
-	  			for (i=0; i<=K; i++) {
-	  				nu[i] = 0;
-	  			}
-	  			break;
-		case 128: 
+		if ( bitStream->GetBitLength() < 128 ) {
+			this->error = InsufficientNumberOfBits;
+			this->random = false;
+			return this->random;
+		}
+		if ( bitStream->GetBitLength() < 6272 ) {
+		  	K = 3;
+	  		substringLength = 8;
+	  		pi[0] = 0.21484375;
+	  		pi[1] = 0.3671875;
+	  		pi[2] = 0.23046875;
+	  		pi[3] = 0.1875;
+	  		k[0] = 1;
+	  		k[1] = 2;
+	  		k[2] = 3;
+	  		k[3] = 4;
+		}
+		else {
+			if ( bitStream->GetBitLength() < 750000 ) {
 		  		K = 5;
 				substringLength = 128;
 				pi[0] = 0.1174035788;
@@ -128,11 +137,8 @@ namespace DiceLockSecurity {
 				k[3] = 7;
 				k[4] = 8;
 				k[5] = 9;
-				for (i=0; i<=K; i++) {
-					nu[i] = 0;
-				}
-	  			break;
-		case 10000:
+			}
+			else {
 		  		K = 6;
 		  		substringLength = 10000;
 		  		pi[0] = 0.0882;
@@ -142,104 +148,58 @@ namespace DiceLockSecurity {
 		  		pi[4] = 0.1208;
 		  		pi[5] = 0.0675;
 		  		pi[6] = 0.0727;
-		  		for (i=0; i<=K; i++) {
-		  			nu[i] = 0;
-		  			k[i] = 0;
-		  		}
-	  			break;
-		default: this->error = LongRunsCaseError;
-	  		   this->random = false;
-	  		   return this->random;
-		  
+				k[0] = 10;
+				k[1] = 11;
+				k[2] = 12;
+				k[3] = 13;
+				k[4] = 14;
+				k[5] = 15;
+				k[6] = 16;
+			}
 		}
 	  
-		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
-			this->error = InsufficientNumberOfBits;
-			this->random = false;
-			return this->random;
-		}
 		this->error = NoError;
 		this->substringNumber = (int)floor((long double)(bitStream->GetBitLength()/substringLength));
 		bitStream->SetBitPosition(0);
 		for(i = 0; i < this->substringNumber; i++)  {
 			v_n_obs = 0.e0;
 			run = 0.e0;
-			bitStream->SetBitPosition(i*substringLength);
 			for(j = 0; j < substringLength; j++) {
-				if ((int)bitStream->GetBitForward() == 1) {
+				if ((int)bitStream->GetBitPosition(i * substringLength + j) == 1) {
 					run++;
 					v_n_obs = MAX(v_n_obs, run); 
 				}
-				else 
+				else {
 					run = 0.e0;
+				}
 			}
-			switch (this->longRunCase) {
-				case 8:	     
-					if ((int)v_n_obs == 0 || (int)v_n_obs == 1)
-						nu[0]++;
-					else if ((int)v_n_obs == 2)
-						nu[1]++;
-					else if ((int)v_n_obs == 3)
-						nu[2]++;
-					else if ((int)v_n_obs >= 4)
-						nu[3]++;
-					break;
-				case 128:
-					if ((int)v_n_obs <= 4)
-						nu[0]++;
-					else if ((int)v_n_obs == 5)
-						nu[1]++;
-					else if ((int)v_n_obs == 6)
-						nu[2]++;
-					else if ((int)v_n_obs == 7)
-						nu[3]++;
-					else if ((int)v_n_obs == 8)
-						nu[4]++;
-					else if ((int)v_n_obs >= 9)
-						nu[5]++;
-					break;
-				case 10000:
-					if ((int)v_n_obs <= 10)
-						nu[0]++;
-					else if ((int)v_n_obs == 11) 
-						nu[1]++;
-					else if ((int)v_n_obs == 12)
-						nu[2]++;
-					else if ((int)v_n_obs == 13)
-						nu[3]++;
-					else if ((int)v_n_obs == 14)
-						nu[4]++;
-					else if ((int)v_n_obs == 15)
-						nu[5]++;
-					else if ((int)v_n_obs >= 16)
-						nu[6]++;
-					break;
+			if ( v_n_obs < k[0] ) {
+				nu[0]++;
+			}
+			for (j = 0; j <= K; j++) {
+				if ( v_n_obs == k[j] ) {
+					nu[j]++;
+				}
+			}
+			if ( v_n_obs > k[K] ) {
+				nu[K]++;
 			}
 		}
 		this->chiSquared = 0.0;					
-		sum = 0;
-		for(i = 0; i < K+1; i++) {
-			this->chiSquared += pow((double)nu[i] - (double)this->substringNumber*pi[i],2)/((double)this->substringNumber*pi[i]);
-			sum += nu[i];
+		for(i = 0; i <= K; i++) {
+			this->chiSquared += (((double)nu[i] - (double)this->substringNumber * pi[i]) * (nu[i] - (double)this->substringNumber * pi[i])) / ((double)this->substringNumber * pi[i]);
 		}
-		this->pValue = mathFuncs->IGammaC(K/2.,this->chiSquared/2.);
-		if (_isnan(this->pValue)) {
-			this->pValue = 0.0;
-			this->error = MathematicianNAN;
+		this->pValue = mathFuncs->IGammaC((double)(K/2.0),(this->chiSquared/2.0));
+		if (isNegative(this->pValue) || isGreaterThanOne(this->pValue)) {
+			this->error = PValueOutOfRange;
 			this->random = false;
 		}
 		else {
-			if (isNegative(this->pValue) || isGreaterThanOne(this->pValue)) {
-   				this->error = PValueOutOfRange;
+			if (this->pValue < this->alpha) {     
 				this->random = false;
 			}
 			else {
-				if (this->pValue < this->alpha) {     
-					this->random = false;
-				}
-				else {
-					this->random = true;
-				}
+				this->random = true;
 			}
 		}
 		for (i = 0; i < K+1; i++)
@@ -313,4 +273,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-

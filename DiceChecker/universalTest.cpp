@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -91,6 +92,12 @@ namespace DiceLockSecurity {
 		bitsDiscarded = 0;
 	}
 	
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool UniversalTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool UniversalTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		int      i, j, p;
@@ -251,4 +258,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -59,11 +60,18 @@ namespace DiceLockSecurity {
 		sumDiv_n = 0.0;
 	}
 	
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool FrequencyTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool FrequencyTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		unsigned long i;
 		double f, s_obs, sum;
 		double sqrt2 = 1.41421356237309504880;
+		unsigned short int bitTemp;
 
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -73,8 +81,10 @@ namespace DiceLockSecurity {
 		bitStream->SetBitPosition(0);
 		this->error = NoError;
 		sum = 0.0;
-		for(i = 0; i < bitStream->GetBitLength(); i++)
-			sum += 2*((int)bitStream->GetBitForward())-1;
+		for(i = 0; i < bitStream->GetBitLength(); i++) {
+			bitTemp = (unsigned short int)bitStream->GetBitPosition(i);
+			sum += ((2 * bitTemp) - 1);
+		}
 		s_obs = fabs(sum)/sqrt((double)bitStream->GetBitLength());
 		f = s_obs/sqrt2;
 		this->pValue = this->mathFuncs->ErFc(f);
@@ -122,4 +132,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-

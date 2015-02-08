@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -110,6 +111,12 @@ namespace DiceLockSecurity {
 		return sum;
 	}
 
+	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+	bool SerialTest::IsRandom(void) {
+
+		return BaseRandomTest::IsRandom();
+	}
+
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool SerialTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 
@@ -119,13 +126,6 @@ namespace DiceLockSecurity {
 			return this->random;
 		}
 		this->error = NoError;
-		if (this->blockLength > (int)this->MaximumBlockSizeRecommended(bitStream->GetBitLength())) {
-    		this->blockSizeExceeded = true;
-    		this->maximumBlockSizeRecommended = this->MaximumBlockSizeRecommended(bitStream->GetBitLength());
-    		this->error = ResultsInaccurate;
-    		this->random = false;
-    		return this->random ;
-		} 
 		this->psim = psi2(this->blockLength, bitStream);
 		this->psim1 = psi2(this->blockLength-1, bitStream);
 		this->psim2 = psi2(this->blockLength-2, bitStream);
@@ -135,24 +135,24 @@ namespace DiceLockSecurity {
 		if (_isnan(this->pValue)) {
 			this->pValue = 0;
 			this->error = MathematicianNAN;
-			this->random = 0;
+			this->random = false;
 			return this->random;
 		}
 		this->pvalue2 = this->mathFuncs->IGammaC(pow((long double)2,this->blockLength-2)/2,this->delta2/2.0);
 		if (_isnan(this->pvalue2)) {
 			this->pvalue2 = 0;
 			this->error = MathematicianNAN;
-			this->random = 0;
+			this->random = false;
 			return this->random;
 		}
 		if (this->pValue < this->alpha) {
-			this->random = 0;
+			this->random = false;
 		}
 		else {
-			this->random = 1;
+			this->random = true;
 		}
 		if (this->pvalue2 < this->alpha) {
-			this->random = 0;
+			this->random = false;
 		}
 		return this->random;
 	}
@@ -161,7 +161,6 @@ namespace DiceLockSecurity {
 	void SerialTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		blockLength = 0;
 		pvalue2 = 0.0;				
 		psim = 0.0; 
 		psim1 = 0.0; 
@@ -230,17 +229,10 @@ namespace DiceLockSecurity {
 		return this->delta2;
 	}
 
-	// Gets the "BlockSizeRecommended" result
-	unsigned int SerialTest::GetMaximumBlockSizeRecommended(void) {
-
-		return this->maximumBlockSizeRecommended;
-	}
-
 	// Gets the "BlockSizeRecommended" for the indicated stream length
-	unsigned int SerialTest::MaximumBlockSizeRecommended(unsigned int length) {
+	unsigned int SerialTest::MaximumBlockSizeRecommended(unsigned long int length) {
 
 		return MAX(1,(int)(log((long double)length)/log((long double)2)-2));
 	}
   }
 }
-

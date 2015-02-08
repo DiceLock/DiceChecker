@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,7 +16,7 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef SERIALTEST_HPP
@@ -46,15 +46,13 @@ namespace DiceLockSecurity {
 			// Random Test Class minimum stream length
 			static const unsigned int	minimumLength;
 
-			int         blockLength;
-			double      pvalue2;				
-			double      psim; 
-			double      psim1; 
-			double      psim2; 
-			double      delta1; 
-			double      delta2;
-			bool	blockSizeExceeded;		
-			unsigned int	maximumBlockSizeRecommended;	 
+			int		blockLength;
+			double	pvalue2;				
+			double	psim; 
+			double	psim1; 
+			double	psim2; 
+			double	delta1; 
+			double	delta2;
 
 			// Psi2 function 
 			CLASS_DECLSPEC double psi2(int, BaseCryptoRandomStream*);
@@ -69,6 +67,9 @@ namespace DiceLockSecurity {
 
 			// Destructor
 			CLASS_DECLSPEC ~SerialTest();
+
+			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			CLASS_DECLSPEC bool IsRandom(void);
 
 			// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream *);
@@ -109,14 +110,10 @@ namespace DiceLockSecurity {
 			// Gets the "delta2" result  
 			CLASS_DECLSPEC double GetDelta2(void);
 
-			// Sets the "BlockSizeRecommended" result
-			CLASS_DECLSPEC unsigned int GetMaximumBlockSizeRecommended(void);	 
-
 			// Gets the "BlockSizeRecommended" for the indicated stream length
-			CLASS_DECLSPEC unsigned int MaximumBlockSizeRecommended(unsigned int);
+			CLASS_DECLSPEC unsigned int MaximumBlockSizeRecommended(unsigned long int);
 	};
   }
 }
 
 #endif
-

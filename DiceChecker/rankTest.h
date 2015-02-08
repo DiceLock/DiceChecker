@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -16,7 +16,7 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #ifndef RANKTEST_HPP
@@ -53,28 +53,28 @@ namespace DiceLockSecurity {
 			double	f30, f31, f32;			// Frequencies
 
 			// Create Matrix 
-			bitItem**	CreateMatrix(int, int);
+			unsigned char**	CreateMatrix(int, int);
 
 			// Define Matrix 
-			void		DefineMatrix(BaseCryptoRandomStream*, int, int, bitItem**, int);
+			void		DefineMatrix(BaseCryptoRandomStream*, int, int, unsigned char**, int);
 
 			// Deletes matrix 
-			void		DeleteMatrix(int, bitItem**);
+			void		DeleteMatrix(int, unsigned char**);
 
 			// Computes rank 
-			int			ComputeRank(int, int, bitItem**);
+			int			ComputeRank(int, int, unsigned char**);
 
 			// Perform Elementary Row Operations
-			void		PerformElementaryRowOperations(int, int, int, int, bitItem**);
+			void		PerformElementaryRowOperations(int, int, int, int, unsigned char**);
 
 			// Find Unit Element And Swap
-			int			FindUnitElementAndSwap(int, int, int, int, bitItem**);
+			int			FindUnitElementAndSwap(int, int, int, int, unsigned char**);
 
 			// Swap Rows 
-			int			SwapRows(int, int, int, bitItem**);
+			int			SwapRows(int, int, int, unsigned char**);
 
 			// Determine Rank 
-			int			DetermineRank(int, int, int, bitItem**);
+			int			DetermineRank(int, int, int, unsigned char**);
 
 		public:
 
@@ -86,6 +86,9 @@ namespace DiceLockSecurity {
 
 			// Destructor
 			CLASS_DECLSPEC ~RankTest();
+
+			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			CLASS_DECLSPEC bool IsRandom(void);
 
 			// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
@@ -131,4 +134,3 @@ namespace DiceLockSecurity {
 }
 
 #endif
-

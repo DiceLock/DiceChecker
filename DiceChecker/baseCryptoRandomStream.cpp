@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.3.0.0.1
+// Version:    vers.4.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
 //
 //                               DISCLAIMER
 //
@@ -15,8 +15,9 @@
 // OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
-// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS
+// DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
 #include <stdexcept>
@@ -123,41 +124,41 @@ namespace DiceLockSecurity {
 	}
 
 	// Sets the BaseCryptoRandomStream bit at current position and moves pointer to the following bit
-	void BaseCryptoRandomStream::SetBitForward(unsigned short int newBit) {
+	void BaseCryptoRandomStream::SetBitForward(unsigned char newBit) {
 
-		this->cryptoStream[this->position++].bit = newBit;
+		this->SetBitPosition(this->position++, newBit);
 	}
 
 	// Sets the BaseCryptoRandomStream bit at current position and moves pointer to the previous bit
-	void BaseCryptoRandomStream::SetBitReverse(unsigned short int newBit) {
+	void BaseCryptoRandomStream::SetBitReverse(unsigned char newBit) {
 
-		this->cryptoStream[this->position--].bit = newBit;
-	}
-
-	// Gets the BaseCryptoRandomStream bit at a specified position
-	unsigned short int BaseCryptoRandomStream::GetBitPosition(unsigned long int pos) {
-
-		return (this->cryptoStream[pos].bit);
+		this->SetBitPosition(this->position--, newBit);
 	}
 
 	// Gets the BaseCryptoRandomStream bit at current position and moves pointer to the following bit
-	unsigned short int BaseCryptoRandomStream::GetBitForward(void) {
+	unsigned char BaseCryptoRandomStream::GetBitForward(void) {
+		unsigned char bit;
 
-		return (this->cryptoStream[this->position++].bit);
+		bit = ((this->cryptoStream[((this->position) / BYTEBITS)] >> (this->position % BYTEBITS)) & 0x01);
+		this->position++;
+		return bit;
 	}
 
 	// Gets the BaseCryptoRandomStream bit at current position and moves pointer to the previous bit
-	unsigned short int BaseCryptoRandomStream::GetBitReverse(void) {
+	unsigned char BaseCryptoRandomStream::GetBitReverse(void) {
+		unsigned char bit;
 
-		return (this->cryptoStream[this->position--].bit);
+		bit = ((this->cryptoStream[((this->position) / BYTEBITS)] >> (this->position % BYTEBITS)) & 0x01);
+		this->position--;
+		return bit;
 	}
 
 	// Sets the stream to an specified bit value (0 or 1)
-	void BaseCryptoRandomStream::FillBit(unsigned short int bit) {
-		unsigned short int i;
+	void BaseCryptoRandomStream::FillBit(unsigned char bit) {
+		unsigned long int i;
 
 		for ( i = 0; i < this->GetBitLength(); i++ )
-			this->cryptoStream[i].bit = bit;
+			this->SetBitPosition(i, bit);
 	}
 
 	// Sets the stream to an specified bit unsigned char value
@@ -179,6 +180,29 @@ namespace DiceLockSecurity {
 
 		if (this->cryptoStream != NULL)
 			memset(this->cryptoStream, value, this->GetUCLength()); 
+	}
+
+	// Sets the bit unsigned char (value 0 or 1) at specified postion, position based in array of bits
+	void BaseCryptoRandomStream::SetBitPosition(unsigned long int pos, unsigned char bitData) {
+
+		switch ( pos % 8 ) {
+			case 7 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit7 = bitData;
+				break;
+			case 6 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit6 = bitData;
+				break;
+			case 5 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit5 = bitData;
+				break;
+			case 4 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit4 = bitData;
+				break;
+			case 3 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit3 = bitData;
+				break;
+			case 2 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit2 = bitData;
+				break;
+			case 1 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit1 = bitData;
+				break;
+			case 0 : ((byteBits *)&(this->cryptoStream[pos/BYTEBITS]))->bit0 = bitData;
+				break;
+		}
 	}
 
 	// Sets the unsigned char at specified position, position based in array of unsigned char
@@ -243,6 +267,20 @@ namespace DiceLockSecurity {
 				pointer = (unsigned __int64 *)(this->cryptoStream + (pos * sizeof(unsigned __int64)));
 				(*pointer) = longData;
 			}
+		}
+		catch (char* str) {
+			throw str;
+		}
+	}
+
+	// Gets the bit unsigned char (vakue  0 or 1) at specified postion, position based in array of bits
+	unsigned char BaseCryptoRandomStream::GetBitPosition(unsigned long int pos) {
+
+		try {
+			if ( pos >= this->GetBitLength() )
+				throw "Positions exceeded stream length !";
+			else
+				return ( ((this->cryptoStream[(pos / BYTEBITS)] >> (pos % BYTEBITS)) & 0x01) );
 		}
 		catch (char* str) {
 			throw str;
@@ -351,7 +389,7 @@ namespace DiceLockSecurity {
 			}
 			else {
 				subStream->bitLength = this->GetBitLength() - (pos * BYTEBITS);
-				subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned char)]));
+				subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned char)]));
 			}
 		}
 		catch (char* str) {
@@ -369,7 +407,7 @@ namespace DiceLockSecurity {
 			}
 			else {
 				subStream->bitLength = this->GetBitLength() - (pos * BYTEBITS * sizeof(unsigned short int));
-				subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned short int)]));
+				subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned short int)]));
 			}
 		}
 		catch (char* str) {
@@ -387,7 +425,7 @@ namespace DiceLockSecurity {
 			}
 			else {
 				subStream->bitLength = this->GetBitLength() - (pos * BYTEBITS * sizeof(unsigned long int));
-				subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned long int)]));
+				subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned long int)]));
 			}
 		}
 		catch (char* str) {
@@ -410,7 +448,7 @@ namespace DiceLockSecurity {
 				}
 				else {
 					subStream->bitLength = length * BYTEBITS;
-					subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned char)]));
+					subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned char)]));
 				}
 			}
 		}
@@ -433,7 +471,7 @@ namespace DiceLockSecurity {
 				}
 				else {
 					subStream->bitLength = length * BYTEBITS * sizeof(unsigned short int);
-					subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned short int)]));
+					subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned short int)]));
 				}
 			}
 		}
@@ -456,7 +494,7 @@ namespace DiceLockSecurity {
 				}
 				else {
 					subStream->bitLength = length * BYTEBITS * sizeof(unsigned long int);
-					subStream->cryptoStream = (bitItem *)(&(this->cryptoStream[pos * sizeof(unsigned long int)]));
+					subStream->cryptoStream = (unsigned char *)(&(this->cryptoStream[pos * sizeof(unsigned long int)]));
 				}
 			}
 		}
@@ -572,4 +610,3 @@ namespace DiceLockSecurity {
 	}
   }
 }
-
