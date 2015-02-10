@@ -20,13 +20,9 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include "rankTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {

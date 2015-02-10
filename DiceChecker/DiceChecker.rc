@@ -27,8 +27,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,0,0,1
- PRODUCTVERSION 4,0,0,1
+ FILEVERSION 6,0,0,1
+ PRODUCTVERSION 6,0,0,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -46,13 +46,13 @@ BEGIN
             VALUE "Comments", "Dynamic link library to perform random tests"
             VALUE "CompanyName", "DiceLock Security, LLC"
             VALUE "FileDescription", "Dll with the implmentation of random tests: Approximate Entropy, Block Frequency, Cumulative Sum Forward, Cumulative Sum Reverse,  Discrete Fourier Transform, Frequency, Linear Complexity, Longest Run Of Ones,  Overlapping Template Matchings, Rank, Serial and Universal tests."
-            VALUE "FileVersion", "4, 0, 0, 1"
+            VALUE "FileVersion", "6, 0, 0, 1"
             VALUE "InternalName", "DiceChecker"
-            VALUE "LegalCopyright", "Copyright (C) 2010  DiceLock Security, LLC"
+            VALUE "LegalCopyright", "Copyright (C) 2008-2012  DiceLock Security, LLC"
             VALUE "LegalTrademarks", "DiceLock (R) is a registered trademark in the United States, European Community and others."
             VALUE "OriginalFilename", "DiceChecker"
             VALUE "ProductName", "DiceChecker"
-            VALUE "ProductVersion", "4, 0, 0, 1"
+            VALUE "ProductVersion", "6, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"

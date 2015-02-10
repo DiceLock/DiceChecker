@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -20,14 +20,10 @@
 // DICELOCK IS A REGISTERED TRADEMARK OR TRADEMARK OF THE OWNERS.
 // 
 
-#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
 #include "runsTest.h"
-
-
-using namespace std;
 
 
 namespace DiceLockSecurity {
@@ -72,7 +68,8 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool RunsTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		unsigned long int i, *r;
+		unsigned long int i;
+		unsigned short int *r;
 		double product, sum;
 	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
@@ -82,7 +79,7 @@ namespace DiceLockSecurity {
 		}
 		bitStream->SetBitPosition(0);
 		this->error = NoError;
-		if ((r = (unsigned long int *) calloc(bitStream->GetBitLength(),sizeof(int))) == NULL) {
+		if ((r = (unsigned short int *) calloc(bitStream->GetBitLength(),sizeof(unsigned short int))) == NULL) {
 			this->error = InsufficientMemory;
 			this->random = false;
 		}

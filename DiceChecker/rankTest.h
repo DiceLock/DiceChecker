@@ -49,7 +49,7 @@ namespace DiceLockSecurity {
 			double  chiSquared;
 			unsigned long int matrixNumber;
 			unsigned long int bitsDiscarded;
-			double  p30, p31, p32;		 	/// Probabilities
+			double  p30, p31, p32;		 	/// Probabilities 
 			double	f30, f31, f32;			/// Frequencies
 
 			/// Create Matrix 

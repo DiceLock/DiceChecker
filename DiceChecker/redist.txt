@@ -1,0 +1,13 @@
+The following list is a list of files available from DiceLock Security 
+for redistribution under the license.  If the software you have licensed 
+is not DiceLock Security software, only the files that are installed by 
+the DiceLock Security software may be redistributed under such license.
+
+-----------------------------------------------------------
+
+Subject to the license terms for the software, the following files can 
+be redistributed with your application in your application local folder 
+or by deploying into the Global Assembly Cache (GAC):
+
+DiceChecker.dll
+

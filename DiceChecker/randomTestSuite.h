@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.5.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
+// Copyright © 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -45,12 +45,14 @@ namespace DiceLockSecurity {
 
 			BaseRandomTest*			suite[NumberOfTests];
 			bool					selfCreatedTest[NumberOfTests];
+			bool					usedTests[NumberOfTests];
 			bool					random;
+			bool					strictRandomnessCheck;
 			MathematicalFunctions*  mathFunctions;    
 			bool					selfCreatedMaths;
 			RandomTestErrors		error;
-			int						instantiatedTests;
-			int						numberOfErrors;
+			unsigned short int		instantiatedTests;
+			unsigned short int		numberOfErrors;
 			RandomTests				errorTest;
 			RandomTests				nonRandomTest;
 
@@ -213,11 +215,11 @@ namespace DiceLockSecurity {
 			CLASS_DECLSPEC bool IsRandom(void);
 
 			/// Gets the number of Random Tests that contains the suite
-			CLASS_DECLSPEC int GetInstantiatedTests(void);
+			CLASS_DECLSPEC unsigned short int GetInstantiatedTests(void);
 
 			/// Gets the minimum random stream length in bits corresponding
 			/// to random number test with higher random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
 			/// Gets the corresponding random number test 
 			/// with higher minimum random stream length in bits 
@@ -240,6 +242,61 @@ namespace DiceLockSecurity {
 
 			/// Gets the number of random tests that can be used in the RandomTestSuite
 			CLASS_DECLSPEC RandomTests GetMaximumNumberOfTests(void);
+
+			/// STRICT RANDOMNESS METHODS
+
+			/// Sets strict randomness checking, if all random tests instantiated in the suite will be verified
+			/// true: all random tests instantiated in the suite will be verified
+			/// false: just random tests that can be checked (stream length larger than random test minimum length) will be verified 
+			CLASS_DECLSPEC void SetStrictRandomnessCheck(bool);
+
+			/// Gets strict randomness checking, if all random tests instantiated in the suite will be verified
+			CLASS_DECLSPEC bool SetStrictRandomnessCheck(void);
+
+			/// USED TEST METHODS WHEN STRICT RANDOMNESS CHECKING IS DISABLED
+
+			/// Gets number of random test that has been used in last random test checking
+			CLASS_DECLSPEC unsigned short int GetUsedTestsNumber(void);
+
+			/// Gets if enumerated random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedTest(RandomTests);
+
+			/// Gets if frequency random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedFrequencyTest(void);
+
+			/// Gets if block frequency random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedBlockFrequencyTest(void);
+
+			/// Gets if cumulative sum forward random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedCumulativeSumForwardTest(void);
+
+			/// Gets if cumulative sum reverse random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedCumulativeSumReverseTest(void);
+
+			/// Gets if runs random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedRunsTest(void);
+
+			/// Gets if longest run of ones random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedLongestRunOfOnesTest(void);
+
+			/// Gets if rank random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedRankTest(void);
+
+			/// Gets if universal random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedUniversalTest(void);
+
+			/// Gets if approximate entropy random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedApproximateEntropyTest(void);
+
+			/// Gets if serial random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedSerialTest(void);
+
+			/// Gets if discrete fourier transform random test has been used in last random test checking
+			CLASS_DECLSPEC bool GetUsedDiscreteFourierTransformTest(void);
+
+			/// Resets all random test "used" signal to false 
+			CLASS_DECLSPEC void ResetUsedTests(void);
+
 	};
   }
 }
