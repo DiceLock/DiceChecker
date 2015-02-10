@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -36,28 +36,28 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests FrequencyTest::test = Frequency;
 	// Random Test Class minimum stream length
-	const unsigned int	FrequencyTest::minimumLength = 100;
+	const unsigned long int	FrequencyTest::minimumLength = 100;
 
 	// Constructor, default 
 	FrequencyTest::FrequencyTest() {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	FrequencyTest::FrequencyTest(MathematicalFunctions* mathFuncObj) {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 	// Destructor
 	FrequencyTest::~FrequencyTest() {
 
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -69,7 +69,7 @@ namespace DiceLockSecurity {
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool FrequencyTest::IsRandom(BaseCryptoRandomStream* bitStream) {
 		unsigned long i;
-		double f, s_obs, sum;
+		double f, s_obs, sumDouble;
 		double sqrt2 = 1.41421356237309504880;
 		unsigned short int bitTemp;
 
@@ -80,12 +80,12 @@ namespace DiceLockSecurity {
 		}
 		bitStream->SetBitPosition(0);
 		this->error = NoError;
-		sum = 0.0;
+		sumDouble = 0.0;
 		for(i = 0; i < bitStream->GetBitLength(); i++) {
 			bitTemp = (unsigned short int)bitStream->GetBitPosition(i);
-			sum += ((2 * bitTemp) - 1);
+			sumDouble += ((2 * bitTemp) - 1);
 		}
-		s_obs = fabs(sum)/sqrt((double)bitStream->GetBitLength());
+		s_obs = fabs(sumDouble)/sqrt((double)bitStream->GetBitLength());
 		f = s_obs/sqrt2;
 		this->pValue = this->mathFuncs->ErFc(f);
 		if (this->pValue < this->GetAlpha()) { 
@@ -94,8 +94,8 @@ namespace DiceLockSecurity {
 		else {
 			this->random = true;
 		}
-		this->sum = (int)sum;
-		this->sumDiv_n = sum/bitStream->GetBitLength();
+		this->sum = (int)sumDouble;
+		this->sumDiv_n = sumDouble/bitStream->GetBitLength();
 		return this->random;
 	}
 
@@ -103,8 +103,8 @@ namespace DiceLockSecurity {
 	void FrequencyTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		sum = 0;
-		sumDiv_n = 0.0;
+		this->sum = 0;
+		this->sumDiv_n = 0.0;
 	}
 
 	// Gets the type of the object
@@ -114,13 +114,13 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int FrequencyTest::GetMinimumLength(void) {
+	unsigned long int FrequencyTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Gets the "sum" result
-	int FrequencyTest::GetSum(void) {
+	signed long int FrequencyTest::GetSum(void) {
 
 		return this->sum;
 	}

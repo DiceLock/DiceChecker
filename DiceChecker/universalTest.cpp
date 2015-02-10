@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -36,7 +36,7 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests UniversalTest::test = Universal;
 	// Random Test Class minimum stream length
-	const unsigned int	UniversalTest::minimumLength = 387840;
+	const unsigned long int	UniversalTest::minimumLength = 387840;
 
 	// Maurer's expected value constants
 	const double UniversalTest::expectedValue[17] = {
@@ -52,44 +52,44 @@ namespace DiceLockSecurity {
 		// Constructor, default 
 	UniversalTest::UniversalTest() {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	UniversalTest::UniversalTest(MathematicalFunctions* mathFuncObj) {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 	// Destructor
 	UniversalTest::~UniversalTest() {
 
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -100,9 +100,9 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool UniversalTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int      i, j, p;
-		double   arg, sqrt2, c;
-		long*    T, decRep;
+		unsigned long int i, j, p;
+		double arg, sqrt2, c;
+		unsigned long int* T, decRep;
 
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -124,9 +124,9 @@ namespace DiceLockSecurity {
 		else if (bitStream->GetBitLength() >= 904960)     this->L = 7;
 		else if (bitStream->GetBitLength() >= 387840)     this->L = 6;
 
-		this->Q = 10*(int)pow((double)2,this->L);
+		this->Q = 10*(int)pow((double)2, (int)this->L);
 		this->K = (int)((long double)floor((double)(bitStream->GetBitLength()/this->L)) - (double)this->Q);	 		    
-		if ((double)this->Q < 10*pow((double)2,this->L)) {
+		if ((double)this->Q < 10*pow((double)2,(int)this->L)) {
 			this->random = false;
 			this->error = LOrQOutOfRange;
 		}
@@ -138,8 +138,8 @@ namespace DiceLockSecurity {
 			this->sigma = c * sqrt(this->varianceResult /(double)this->K);
 			sqrt2 = sqrt((double)2);
 			this->sum = 0.0;
-			p = (int)pow((double)2,this->L);
-			T = (long*) calloc(p, sizeof(long));
+			p = (int)pow((double)2,(int)this->L);
+			T = (unsigned long int*) calloc(p, sizeof(unsigned long int));
 			if (T == NULL) {
 				this->error = InsufficientMemory;
 				this->random = false;
@@ -150,13 +150,13 @@ namespace DiceLockSecurity {
 			for(i = 1; i <= this->Q; i++) {			
 				decRep = 0;
 				for(j = 0; j < this->L; j++) 
-					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
+					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2, (int)(this->L-1-j));
 				T[decRep] = i;
 			}
 			for(i = this->Q+1; i <= this->Q+this->K; i++) { 	
 				decRep = 0;
 				for(j = 0; j < this->L; j++) 
-					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,this->L-1-j);
+					decRep += bitStream->GetBitPosition((i-1)*this->L+j) * (long)pow((double)2,(int)(this->L-1-j));
 				this->sum += log((double)(i - T[decRep]))/log((double)2);
 				T[decRep] = i;
 			}
@@ -180,15 +180,15 @@ namespace DiceLockSecurity {
 	void UniversalTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		L = 0;
-		Q = 0;
-		K = 0;
-		sigma = 0.0;
-		phi = 0.0;
-		sum = 0.0;
-		expectedValueResult = 0.0;
-		varianceResult = 0.0;
-		bitsDiscarded = 0;
+		this->L = 0;
+		this->Q = 0;
+		this->K = 0;
+		this->sigma = 0.0;
+		this->phi = 0.0;
+		this->sum = 0.0;
+		this->expectedValueResult = 0.0;
+		this->varianceResult = 0.0;
+		this->bitsDiscarded = 0;
 	}
 
 	// Gets the type of the object
@@ -198,25 +198,25 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int UniversalTest::GetMinimumLength(void) {
+	unsigned long int UniversalTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Gets the "L" result
-	int UniversalTest::GetL(void) {
+	unsigned long int UniversalTest::GetL(void) {
 
 		return this->L;
 	}
 
 	// Gets the "Q" result
-	int UniversalTest::GetQ(void) {
+	unsigned long int UniversalTest::GetQ(void) {
 
 		return this->Q;
 	}
 
 	// Gets the "K" result
-	int UniversalTest::GetK(void) {
+	unsigned long int UniversalTest::GetK(void) {
 
 		return this->K;
 	}
@@ -252,7 +252,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the "bitsDiscarded" result
-	int UniversalTest::GetBitsDiscarded(void) {
+	unsigned long int UniversalTest::GetBitsDiscarded(void) {
 
 		return this->bitsDiscarded;
 	}

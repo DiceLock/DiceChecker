@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -42,75 +42,72 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int	minimumLength;
 
-			// Random Test Class block sizes and minimum lengths
+			/// Random Test Class block sizes and minimum lengths
 			struct blockSizeMinimumLength {
-				int blockSize;
-				int minimumLength;
+				unsigned long int blockSize;
+				unsigned long int minimumLength;
 			};
-			static const short	numberBlockSizes;
+			static const unsigned short int numberBlockSizes;
 			static const blockSizeMinimumLength	blockSizes[3];
 
-			static const int NumAssignments;	// 7 
-			int          longRunCase;
-			int          substringNumber;
-			int          substringLength;
+			static const unsigned short int NumAssignments;	// 7 
+			unsigned long int longRunCase;
+			unsigned long int substringNumber;
+			unsigned long int substringLength;
+			unsigned long int *assignment;
 			double       chiSquared;
-			unsigned int *assignment;
 			
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC LongestRunOfOnesTest();
 
-			// Constructor, setting longRunCase 
-			CLASS_DECLSPEC LongestRunOfOnesTest(int);
-
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC LongestRunOfOnesTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~LongestRunOfOnesTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Sets the longRunCase parameter 
-			CLASS_DECLSPEC void SetLongRunCase(int);
+			/// Sets the longRunCase parameter 
+			CLASS_DECLSPEC void SetLongRunCase(unsigned long int);
 
-			// Gets the longRunCase parameter 
-			CLASS_DECLSPEC int GetLongRunCase(void);
+			/// Gets the longRunCase parameter 
+			CLASS_DECLSPEC unsigned long int GetLongRunCase(void);
 
-			// Gets the "substringNumber" result 
-			CLASS_DECLSPEC int GetSubstringNumber(void);
+			/// Gets the "substringNumber" result 
+			CLASS_DECLSPEC unsigned long int GetSubstringNumber(void);
 
-			// Gets the "substringLength" result
-			CLASS_DECLSPEC int GetSubstringLength(void);
+			/// Gets the "substringLength" result
+			CLASS_DECLSPEC unsigned long int GetSubstringLength(void);
 
-			// Gets the chiSquared result
+			/// Gets the chiSquared result
 			CLASS_DECLSPEC double GetChiSquared(void);
 
-			// Gets the Assignment result
-			CLASS_DECLSPEC void GetAssignment(unsigned int *);
+			/// Gets the Assignment result
+			CLASS_DECLSPEC void GetAssignment(unsigned long int *);
 
-			// Gets the Assignment result based on the index
-			CLASS_DECLSPEC unsigned int GetAssignmentOfIndex(int);
+			/// Gets the Assignment result based on the index
+			CLASS_DECLSPEC unsigned long int GetAssignmentOfIndex(unsigned long int);
 	};
   }
 }

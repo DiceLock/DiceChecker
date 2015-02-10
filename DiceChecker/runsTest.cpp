@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -37,31 +37,31 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests RunsTest::test = Runs;
 	// Random Test Class minimum stream length
-	const unsigned int	RunsTest::minimumLength = 100;
+	const unsigned long int	RunsTest::minimumLength = 100;
 
 	// Constructor, default 
 	RunsTest::RunsTest() {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	RunsTest::RunsTest(MathematicalFunctions* mathFuncObj) {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 	// Destructor
 	RunsTest::~RunsTest() {
 
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -72,7 +72,7 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool RunsTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		unsigned int    i, *r;
+		unsigned long int i, *r;
 		double product, sum;
 	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
@@ -82,7 +82,7 @@ namespace DiceLockSecurity {
 		}
 		bitStream->SetBitPosition(0);
 		this->error = NoError;
-		if ((r = (unsigned int *) calloc(bitStream->GetBitLength(),sizeof(int))) == NULL) {
+		if ((r = (unsigned long int *) calloc(bitStream->GetBitLength(),sizeof(int))) == NULL) {
 			this->error = InsufficientMemory;
 			this->random = false;
 		}
@@ -123,9 +123,9 @@ namespace DiceLockSecurity {
 	void RunsTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		pi = 0.0;
-		totalNumberRuns = 0.0;
-		argument = 0.0;
+		this->pi = 0.0;
+		this->totalNumberRuns = 0.0;
+		this->argument = 0.0;
 	}
 
 	// Gets the type of the object
@@ -135,7 +135,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int RunsTest::GetMinimumLength(void) {
+	unsigned long int RunsTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -42,59 +42,56 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int	minimumLength;
 
-			int 	blockLength;
-			double	chiSquared;
-			int		blockNumber;
-			int 	bitsDiscarded;
+			unsigned long int 	blockLength;
+			double				chiSquared;
+			unsigned long int	blockNumber;
+			unsigned long int 	bitsDiscarded;
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC BlockFrequencyTest();
 
-			// Constructor, setting the block length 
-			CLASS_DECLSPEC BlockFrequencyTest(unsigned int);
-
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC BlockFrequencyTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~BlockFrequencyTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Sets the blockLength
+			/// Sets the blockLength
 			CLASS_DECLSPEC void SetBlockLength(unsigned int);
 
-			// Gets the blockLength
-			CLASS_DECLSPEC unsigned int GetBlockLength(void);
+			/// Gets the blockLength
+			CLASS_DECLSPEC unsigned long int GetBlockLength(void);
 
-			// Gets chiSquared
+			/// Gets chiSquared
 			CLASS_DECLSPEC double GetChiSquared(void);
 
-			// Gets blocksNumber tested
-			CLASS_DECLSPEC int GetBlockNumber(void);
+			/// Gets blocksNumber tested
+			CLASS_DECLSPEC unsigned long int GetBlockNumber(void);
 
-			// Gets the bitsDiscarded not tested
-			CLASS_DECLSPEC int GetBitsDiscarded(void);
+			/// Gets the bitsDiscarded not tested
+			CLASS_DECLSPEC unsigned long int GetBitsDiscarded(void);
 	};
   }
 }

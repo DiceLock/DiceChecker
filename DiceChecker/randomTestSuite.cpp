@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -560,7 +560,7 @@ namespace DiceLockSecurity {
 			int i;
 			
 			this->random = true;
-			i=this->GetFirstTest();
+			i = this->GetFirstTest();
 			while ((i < this->GetMaximumNumberOfTests()) && (this->random)) {
 				if (this->suite[i] != NULL) {
 					this->random &= this->suite[i]->IsRandom(stream);
@@ -580,7 +580,7 @@ namespace DiceLockSecurity {
 			int i;
 			
 			this->random = true;
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
 				if (this->suite[i] != NULL) {
 					this->random &= this->suite[i]->IsRandom(stream);
 					if (!(this->suite[i]->IsRandom())) {
@@ -604,7 +604,7 @@ namespace DiceLockSecurity {
 		void RandomTestSuite::Initialize(void) {
 			int i;
 			
-			for (i=this->GetFirstTest(); i<this->GetMaximumNumberOfTests(); i++) {
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
 				if (this->suite[i] != NULL) {
 					this->suite[i]->Initialize();
 				}
@@ -636,6 +636,43 @@ namespace DiceLockSecurity {
 		int RandomTestSuite::GetInstantiatedTests(void) {
 
 			return this->instantiatedTests;
+		}
+
+		// Gets the minimum random stream length in bits corresponding
+		// to random number test with higher random stream length
+		unsigned int RandomTestSuite::GetMinimumLength(void) {
+			unsigned int minimumMax;
+			int i;
+
+			minimumMax = 0;
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
+				if ( this->Exist((RandomTests)i) ) {
+					if ( this->GetRandomTest((RandomTests)i)->GetMinimumLength() > minimumMax ) {
+						minimumMax = this->GetRandomTest((RandomTests)i)->GetMinimumLength();
+					}
+				}
+			}
+			return minimumMax;
+		}
+
+		// Gets the corresponding random number test 
+		// with higher minimum random stream length in bits 
+		RandomTests RandomTestSuite::GetMinimumLengthRandomTest(void) {
+			unsigned int minimumMax;
+			int i;
+			RandomTests randomTest;
+
+			minimumMax = 0;
+			randomTest = NotDefined;
+			for ( i = this->GetFirstTest(); i < this->GetMaximumNumberOfTests(); i++ ) {
+				if ( this->Exist((RandomTests)i) ) {
+					if ( this->GetRandomTest((RandomTests)i)->GetMinimumLength() > minimumMax ) {
+						minimumMax = this->GetRandomTest((RandomTests)i)->GetMinimumLength();
+						randomTest = (RandomTests)i;
+					}
+				}
+			}
+			return randomTest;
 		}
 
 		// Gets the failed random test in the RandomTestSuite

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -41,10 +41,10 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int	minimumLength;
 
 			double      pi;
 			double      totalNumberRuns;
@@ -52,40 +52,37 @@ namespace DiceLockSecurity {
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC RunsTest();
 
-			// Constructor, setting longRunCase 
-			CLASS_DECLSPEC RunsTest(int);
-
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC RunsTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~RunsTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Gets the "pi" result
+			/// Gets the "pi" result
 			CLASS_DECLSPEC double GetPi(void);
 
-			// Gets the total number of runs result 
+			/// Gets the total number of runs result 
 			CLASS_DECLSPEC double GetTotalNumberRuns(void);
 
-			// Gets the argument result
+			/// Gets the argument result
 			CLASS_DECLSPEC double GetArgument(void);
 	};
   }

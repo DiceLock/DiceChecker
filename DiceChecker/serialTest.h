@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -41,12 +41,12 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int	minimumLength;
 
-			int		blockLength;
+			unsigned long int blockLength;
 			double	pvalue2;				
 			double	psim; 
 			double	psim1; 
@@ -54,64 +54,64 @@ namespace DiceLockSecurity {
 			double	delta1; 
 			double	delta2;
 
-			// Psi2 function 
-			CLASS_DECLSPEC double psi2(int, BaseCryptoRandomStream*);
+			/// Psi2 function 
+			CLASS_DECLSPEC double psi2(signed long int, BaseCryptoRandomStream*);
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC SerialTest();
 
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC SerialTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~SerialTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream *);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Sets the "blockLength" parameter 
-			CLASS_DECLSPEC void SetBlockLength(int);
+			/// Sets the "blockLength" parameter 
+			CLASS_DECLSPEC void SetBlockLength(unsigned long int);
 
-			// Gets the "blockLength" parameter 
-			CLASS_DECLSPEC int GetBlockLength(void);
+			/// Gets the "blockLength" parameter 
+			CLASS_DECLSPEC unsigned long int GetBlockLength(void);
 
-			// Gets the pvalue1 result  
+			/// Gets the pvalue1 result  
 			CLASS_DECLSPEC double GetPvalue(void);				
 
-			// Gets the pvalue2 result  
+			/// Gets the pvalue2 result  
 			CLASS_DECLSPEC double GetPValue2(void);				
 
-			// Gets the "psim" result  
+			/// Gets the "psim" result  
 			CLASS_DECLSPEC double GetPsim(void); 
 
-			// Gets the "psim1" result  
+			/// Gets the "psim1" result  
 			CLASS_DECLSPEC double GetPsim1(void); 
 
-			// Gets the "psim2" result  
+			/// Gets the "psim2" result  
 			CLASS_DECLSPEC double GetPsim2(void); 
 
-			// Gets the "delta1" result  
+			/// Gets the "delta1" result  
 			CLASS_DECLSPEC double GetDelta1(void); 
 
-			// Gets the "delta2" result  
+			/// Gets the "delta2" result  
 			CLASS_DECLSPEC double GetDelta2(void);
 
-			// Gets the "BlockSizeRecommended" for the indicated stream length
-			CLASS_DECLSPEC unsigned int MaximumBlockSizeRecommended(unsigned long int);
+			/// Gets the "BlockSizeRecommended" for the indicated stream length
+			CLASS_DECLSPEC unsigned long int MaximumBlockSizeRecommended(unsigned long int);
 	};
   }
 }

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -41,78 +41,78 @@ namespace DiceLockSecurity {
 
 		private:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int	minimumLength;
 
 			static const double expectedValue[17];
 			static const double variance[17];
 
 		protected:
 
-			int		L;
-			int     Q;
-			int     K;
+			unsigned long int	L;
+			unsigned long int Q;
+			unsigned long int K;
 			double  sigma;
 			double  phi;
 			double  sum;
 			double  expectedValueResult;
 			double  varianceResult;
-			int     bitsDiscarded;
+			unsigned long int bitsDiscarded;
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC UniversalTest();
 
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC UniversalTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~UniversalTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Gets the "L" result
-			CLASS_DECLSPEC int GetL(void);
+			/// Gets the "L" result
+			CLASS_DECLSPEC unsigned long int GetL(void);
 
-			// Gets the "Q" result
-			CLASS_DECLSPEC int GetQ(void);
+			/// Gets the "Q" result
+			CLASS_DECLSPEC unsigned long int GetQ(void);
 
-			// Gets the "K" result
-			CLASS_DECLSPEC int GetK(void);
+			/// Gets the "K" result
+			CLASS_DECLSPEC unsigned long int GetK(void);
 
-			// Gets the "sigma" result
+			/// Gets the "sigma" result
 			CLASS_DECLSPEC double GetSigma(void);
 
-			// Gets the "phi" result
+			/// Gets the "phi" result
 			CLASS_DECLSPEC double GetPhi(void);
 
-			// Gets the "sum" result
+			/// Gets the "sum" result
 			CLASS_DECLSPEC double GetSum(void);
 
-			// Gets the "expectedValue" result
+			/// Gets the "expectedValue" result
 			CLASS_DECLSPEC double GetExpectedValue(void);
 
-			// Gets the "variance" result
+			/// Gets the "variance" result
 			CLASS_DECLSPEC double GetVariance(void);
 
-			// Gets the "bitsDiscarded" result
-			CLASS_DECLSPEC int GetBitsDiscarded(void);
+			/// Gets the "bitsDiscarded" result
+			CLASS_DECLSPEC unsigned long int GetBitsDiscarded(void);
 	};
   }
 }

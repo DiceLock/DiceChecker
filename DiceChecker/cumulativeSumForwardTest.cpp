@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -36,25 +36,25 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests CumulativeSumForwardTest::test = CumulativeSumForward;
 	// Random Test Class minimum stream length
-	const unsigned int	CumulativeSumForwardTest::minimumLength = 100;
+	const unsigned long int	CumulativeSumForwardTest::minimumLength = 100;
 
 	// Constructor, default 
 	CumulativeSumForwardTest::CumulativeSumForwardTest() {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	CumulativeSumForwardTest::CumulativeSumForwardTest(MathematicalFunctions* mathFuncObj) {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Destructor
 	CumulativeSumForwardTest::~CumulativeSumForwardTest() {
 
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -65,7 +65,7 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool CumulativeSumForwardTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int    i, k, start, finish;
+		signed long int i, k, start, finish;
 		double z, sum, sum1, sum2;
  
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
@@ -112,7 +112,7 @@ namespace DiceLockSecurity {
 	void CumulativeSumForwardTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		cuSum = 0;
+		this->cuSum = 0;
 	}
 
 	// Gets the type of the object
@@ -122,7 +122,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int CumulativeSumForwardTest::GetMinimumLength(void) {
+	unsigned long int CumulativeSumForwardTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}

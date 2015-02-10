@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -36,49 +36,49 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests RankTest::test = Rank;
 	// Random Test Class minimum stream length
-	const unsigned int	RankTest::minimumLength = 38912;
+	const unsigned long int RankTest::minimumLength = 38912;
 
 	// Constructor, default 
 	RankTest::RankTest() {
 
-		chiSquared = 0.0;
-		matrixNumber = 0;
-		bitsDiscarded = 0;
-		p30 = 0.0; 
-		p31 = 0.0;	
-		p32 = 0.0;
-		f30 = 0.0; 
-		f31 = 0.0; 
-		f32 = 0.0;
+		this->chiSquared = 0.0;
+		this->matrixNumber = 0;
+		this->bitsDiscarded = 0;
+		this->p30 = 0.0; 
+		this->p31 = 0.0;	
+		this->p32 = 0.0;
+		this->f30 = 0.0; 
+		this->f31 = 0.0; 
+		this->f32 = 0.0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	RankTest::RankTest(MathematicalFunctions* mathFuncObj) {
 
-		chiSquared = 0.0;
-		matrixNumber = 0;
-		bitsDiscarded = 0;
-		p30 = 0.0; 
-		p31 = 0.0;	
-		p32 = 0.0;
-		f30 = 0.0; 
-		f31 = 0.0; 
-		f32 = 0.0;
+		this->chiSquared = 0.0;
+		this->matrixNumber = 0;
+		this->bitsDiscarded = 0;
+		this->p30 = 0.0; 
+		this->p31 = 0.0;	
+		this->p32 = 0.0;
+		this->f30 = 0.0; 
+		this->f31 = 0.0; 
+		this->f32 = 0.0;
 	}
 
 	// Destructor
 	RankTest::~RankTest() {
 
-		chiSquared = 0.0;
-		matrixNumber = 0;
-		bitsDiscarded = 0;
-		p30 = 0.0; 
-		p31 = 0.0;	
-		p32 = 0.0;
-		f30 = 0.0; 
-		f31 = 0.0; 
-		f32 = 0.0;
+		this->chiSquared = 0.0;
+		this->matrixNumber = 0;
+		this->bitsDiscarded = 0;
+		this->p30 = 0.0; 
+		this->p31 = 0.0;	
+		this->p32 = 0.0;
+		this->f30 = 0.0; 
+		this->f31 = 0.0; 
+		this->f32 = 0.0;
 	}
 	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -89,9 +89,9 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool RankTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int        r;
+		signed long int r, i;
+		unsigned long int k;
 		double     product;
-		int        i, k;
 		double     arg1;
 		double     R;					
 		unsigned char** matrix = CreateMatrix(32, 32);
@@ -163,15 +163,15 @@ namespace DiceLockSecurity {
 	void RankTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		chiSquared = 0.0;
-		matrixNumber = 0;
-		bitsDiscarded = 0;
-		p30 = 0.0; 
-		p31 = 0.0;	
-		p32 = 0.0;
-		f30 = 0.0; 
-		f31 = 0.0; 
-		f32 = 0.0;
+		this->chiSquared = 0.0;
+		this->matrixNumber = 0;
+		this->bitsDiscarded = 0;
+		this->p30 = 0.0; 
+		this->p31 = 0.0;	
+		this->p32 = 0.0;
+		this->f30 = 0.0; 
+		this->f31 = 0.0; 
+		this->f32 = 0.0;
 	}
 
 	// Gets the type of the object
@@ -181,7 +181,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int RankTest::GetMinimumLength(void) {
+	unsigned long int RankTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
@@ -193,13 +193,13 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the "matrixNumber" result
-	int RankTest::GetMatrixNumber(void) {
+	unsigned long int RankTest::GetMatrixNumber(void) {
 
 		return this->matrixNumber;
 	}
 
 	// Gets the "bitsDiscarded" result
-	int RankTest::GetBitsDiscarded(void) {
+	unsigned long int RankTest::GetBitsDiscarded(void) {
 
 		return this->bitsDiscarded;
 	}
@@ -239,8 +239,8 @@ namespace DiceLockSecurity {
 	}
 
 	// Create Matrix 
-	unsigned char** RankTest::CreateMatrix(int M, int Q) {
-		int i;
+	unsigned char** RankTest::CreateMatrix(unsigned long int M, unsigned long int Q) {
+		unsigned long int i;
 		unsigned char** matrix;	
 
 		if ((matrix = (unsigned char**) calloc(M, sizeof(unsigned char *))) == NULL) {
@@ -259,19 +259,18 @@ namespace DiceLockSecurity {
 	}
 
 	// Define Matrix 
-	void RankTest::DefineMatrix(BaseCryptoRandomStream* stream, int M, int Q, unsigned char** m,int k) {
-		int   i,j;
+	void RankTest::DefineMatrix(BaseCryptoRandomStream* stream, signed long int M, signed long int Q, unsigned char** m, signed long int k) {
+		signed long int i,j;
   
 		for (i = 0; i < M; i++) 
 			for (j = 0; j < Q; j++) { 
 				m[i][j] = stream->GetBitPosition(k*(M*Q)+j+i*M);
 			}
-		return;
 	}
 
 	// Deletes matrix 
-	void RankTest::DeleteMatrix(int M, unsigned char** matrix) {
-		int i;
+	void RankTest::DeleteMatrix(signed long int M, unsigned char** matrix) {
+		signed long int i;
   
 		for (i = 0; i < M; i++)
 			free(matrix[i]);
@@ -279,10 +278,10 @@ namespace DiceLockSecurity {
 	}
 
 	// Computes rank 
-	int RankTest::ComputeRank(int M, int Q, unsigned char** matrix) {
-		int i;
-		int rank;
-		int m = MIN(M,Q);
+	signed long int RankTest::ComputeRank(signed long int M, signed long int Q, unsigned char** matrix) {
+		signed long int i;
+		signed long int rank;
+		signed long int m = MIN(M,Q);
 
 		for(i = 0; i < m-1; i++) {
 			if (matrix[i][i] == 1) 
@@ -305,8 +304,8 @@ namespace DiceLockSecurity {
 	}	
 
 	// Perform Elementary Row Operations
-	void RankTest::PerformElementaryRowOperations(int flag, int i, int M, int Q, unsigned char** A) {
-		int j,k;
+	void RankTest::PerformElementaryRowOperations(signed long int flag, signed long int i, signed long int M, signed long int Q, unsigned char** A) {
+		signed long int j,k;
 
 		switch(flag) { 
 			case 0: for(j = i+1; j < M;  j++)
@@ -320,13 +319,12 @@ namespace DiceLockSecurity {
 								A[j][k] = (A[j][k] + A[i][k]) % 2;
 					break;
 		}
-		return;
 	}
 
 	// Find Unit Element And Swap
-	int	RankTest::FindUnitElementAndSwap(int flag, int i, int M, int Q, unsigned char** A) { 
-		int index;
-		int row_op = 0;
+	signed long int	RankTest::FindUnitElementAndSwap(signed long int flag, signed long int i, signed long int M, signed long int Q, unsigned char** A) { 
+		signed long int index;
+		signed long int row_op = 0;
 
 		switch(flag) {
 			case 0: index = i+1;
@@ -347,8 +345,8 @@ namespace DiceLockSecurity {
 	}
 
 	// Swap Rows 
-	int	RankTest::SwapRows(int i, int index, int Q, unsigned char** A) {
-		int p;
+	signed long int	RankTest::SwapRows(signed long int i, signed long int index, signed long int Q, unsigned char** A) {
+		signed long int p;
 		unsigned char temp;
 
 		for(p = 0; p < Q; p++) {
@@ -360,8 +358,8 @@ namespace DiceLockSecurity {
 	}
 
 	// Determine Rank 
-	int	RankTest::DetermineRank(int m, int M, int Q, unsigned char** A) {
-		int i, j, rank, allZeroes;
+	signed long int	RankTest::DetermineRank(signed long int m, signed long int M, signed long int Q, unsigned char** A) {
+		signed long int i, j, rank, allZeroes;
 
 		rank = m;
 		for(i = 0; i < M; i++) {

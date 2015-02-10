@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -36,38 +36,38 @@ namespace DiceLockSecurity {
 		// Random Test Class enumerator name
 	const RandomTests DiscreteFourierTransformTest::test = DiscreteFourierTransform;
 	// Random Test Class minimum stream length
-	const unsigned int	DiscreteFourierTransformTest::minimumLength = 100;
+	const unsigned long int	DiscreteFourierTransformTest::minimumLength = 100;
 
-	const int DiscreteFourierTransformTest::ntryh[4] = {4,2,3,5};
+	const signed long int DiscreteFourierTransformTest::ntryh[4] = {4,2,3,5};
 	const double DiscreteFourierTransformTest::tpi = 6.28318530717958647692528676655900577;
 	const double DiscreteFourierTransformTest::hsqt2 = 0.70710678118654752440084436210485;
 
 	// Constructor, default 
 	DiscreteFourierTransformTest::DiscreteFourierTransformTest() {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	DiscreteFourierTransformTest::DiscreteFourierTransformTest(MathematicalFunctions* mathFuncObj) {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Destructor
 	DiscreteFourierTransformTest::~DiscreteFourierTransformTest() {
 
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -78,11 +78,11 @@ namespace DiceLockSecurity {
 
 	// Tests randomness of the BaseCryptoRandomStream and returns the random value
 	bool DiscreteFourierTransformTest::IsRandom(BaseCryptoRandomStream* bitStream) {
+		signed long int i, count;
+		signed long int *ifac;
 		double   upperBound;
 		double   *m, *X;
-		int      i, count;
 		double	 *wsave;
-		int      *ifac;
 	
 		if (bitStream->GetBitLength() < this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -92,7 +92,7 @@ namespace DiceLockSecurity {
 		this->error = NoError;
 		if (((X = (double*)calloc(bitStream->GetBitLength(),sizeof(double))) == NULL) ||
 			((wsave = (double*)calloc(2*bitStream->GetBitLength(),sizeof(double))) == NULL) ||
-			((ifac = (int*)calloc(15,sizeof(int))) == NULL) ||
+			((ifac = (signed long int*)calloc(15,sizeof(signed long int))) == NULL) ||
 			((m = (double*)calloc((bitStream->GetBitLength()/2)+1, sizeof(double))) == NULL) ) {
     			this->error = InsufficientMemory;
     			if (X != NULL) free(X);
@@ -141,10 +141,10 @@ namespace DiceLockSecurity {
 	void DiscreteFourierTransformTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		percentile = 0.0;
-		observedPeaks = 0.0;
-		expectedPeaks = 0.0;
-		normalizedDifference = 0.0;
+		this->percentile = 0.0;
+		this->observedPeaks = 0.0;
+		this->expectedPeaks = 0.0;
+		this->normalizedDifference = 0.0;
 	}
 
 	// Gets the type of the object
@@ -154,7 +154,7 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int DiscreteFourierTransformTest::GetMinimumLength(void) {
+	unsigned long int DiscreteFourierTransformTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
@@ -183,14 +183,14 @@ namespace DiceLockSecurity {
 		return this->normalizedDifference;
 	}
 
-	void DiscreteFourierTransformTest::drfti1(int n, double* wa, int* ifac) {
+	void DiscreteFourierTransformTest::drfti1(signed long int n, double* wa, signed long int* ifac) {
 		double arg,argh,argld,fi;
-		int ntry = 0,i,j = 0;
-		int k1, l1, l2, ib;
-		int ld, ii, ip, is, nq, nr;
-		int ido, ipm, nfm1;
-		int nl = n;
-		int nf = 0;
+		signed long int ntry = 0,i,j = 0;
+		signed long int k1, l1, l2, ib;
+		signed long int ld, ii, ip, is, nq, nr;
+		signed long int ido, ipm, nfm1;
+		signed long int nl = n;
+		signed long int nf = 0;
 
 		ntry = ntryh[0];
 		j = 0;
@@ -248,10 +248,10 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	void DiscreteFourierTransformTest::drftf1(int n, double *c, double *ch, double *wa, int *ifac) {
-		int i,k1,l1,l2;
-		int na,kh,nf;
-		int ip,iw,ido,idl1,ix2,ix3;
+	void DiscreteFourierTransformTest::drftf1(signed long int n, double *c, double *ch, double *wa, signed long int *ifac) {
+		signed long int i,k1,l1,l2;
+		signed long int na,kh,nf;
+		signed long int ip,iw,ido,idl1,ix2,ix3;
 
 		nf = (int)ifac[1];
 		na = 1;
@@ -301,9 +301,9 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	void DiscreteFourierTransformTest::dradf2(int ido,int l1,double *cc,double *ch,double *wa1) {
-		int i,k;
-		int t0,t1,t2,t3,t4,t5,t6;
+	void DiscreteFourierTransformTest::dradf2(signed long int ido, signed long int l1, double *cc, double *ch, double *wa1) {
+		signed long int i,k;
+		signed long int t0,t1,t2,t3,t4,t5,t6;
   
 		t1 = 0;
 		t0 = (t2 = l1*ido);
@@ -351,8 +351,8 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	void DiscreteFourierTransformTest::dradf4(int ido,int l1,double *cc,double *ch,double *wa1, double *wa2,double *wa3){
-		int i,k,t0,t1,t2,t3,t4,t5,t6;
+	void DiscreteFourierTransformTest::dradf4(signed long int ido, signed long int l1, double *cc, double *ch, double *wa1, double *wa2, double *wa3){
+		signed long int i,k,t0,t1,t2,t3,t4,t5,t6;
 		double ci2,ci3,ci4,cr2,cr3,cr4;
 		t0 = l1*ido;
   
@@ -422,13 +422,13 @@ namespace DiceLockSecurity {
 		}
 	}
 
-	void DiscreteFourierTransformTest::dradfg(int ido,int ip,int l1,int idl1,double *cc,double *c1, double *c2,double *ch,double *ch2,double *wa) {
-		int idij,ipph,i,j,k,l,ic,ik,is;
-		int t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10;
+	void DiscreteFourierTransformTest::dradfg(signed long int ido, signed long int ip, signed long int l1, signed long int idl1, double *cc, double *c1, double *c2, double *ch, double *ch2, double *wa) {
+		signed long int idij,ipph,i,j,k,l,ic,ik,is;
+		signed long int t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10;
 		double dc2,ai1,ai2,ar1,ar2,ds2;
-		int nbd;
+		signed long int nbd;
 		double dcp,arg,dsp,ar1h,ar2h;
-		int idp2,ipp2;
+		signed long int idp2,ipp2;
   
 		arg = tpi/(double)ip;
 		dcp = cos(arg);

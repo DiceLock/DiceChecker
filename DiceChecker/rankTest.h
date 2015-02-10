@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.6.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2012 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -41,92 +41,92 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Random Test Class enumerator name
+			/// Random Test Class enumerator name
 			static const RandomTests	test;
-			// Random Test Class minimum stream length
-			static const unsigned int	minimumLength;
+			/// Random Test Class minimum stream length
+			static const unsigned long int minimumLength;
 
 			double  chiSquared;
-			int     matrixNumber;
-			int     bitsDiscarded;
-			double  p30, p31, p32;		 	// Probabilities
-			double	f30, f31, f32;			// Frequencies
+			unsigned long int matrixNumber;
+			unsigned long int bitsDiscarded;
+			double  p30, p31, p32;		 	/// Probabilities
+			double	f30, f31, f32;			/// Frequencies
 
-			// Create Matrix 
-			unsigned char**	CreateMatrix(int, int);
+			/// Create Matrix 
+			unsigned char**	CreateMatrix(unsigned long int, unsigned long int);
 
-			// Define Matrix 
-			void		DefineMatrix(BaseCryptoRandomStream*, int, int, unsigned char**, int);
+			/// Define Matrix 
+			void DefineMatrix(BaseCryptoRandomStream*, signed long int, signed long int, unsigned char**, signed long int);
 
-			// Deletes matrix 
-			void		DeleteMatrix(int, unsigned char**);
+			/// Deletes matrix 
+			void DeleteMatrix(signed long int, unsigned char**);
 
-			// Computes rank 
-			int			ComputeRank(int, int, unsigned char**);
+			/// Computes rank 
+			signed long int ComputeRank(signed long int, signed long int, unsigned char**);
 
-			// Perform Elementary Row Operations
-			void		PerformElementaryRowOperations(int, int, int, int, unsigned char**);
+			/// Perform Elementary Row Operations
+			void PerformElementaryRowOperations(signed long int, signed long int, signed long int, signed long int, unsigned char**);
 
-			// Find Unit Element And Swap
-			int			FindUnitElementAndSwap(int, int, int, int, unsigned char**);
+			/// Find Unit Element And Swap
+			signed long int FindUnitElementAndSwap(signed long int, signed long int, signed long int, signed long int, unsigned char**);
 
-			// Swap Rows 
-			int			SwapRows(int, int, int, unsigned char**);
+			/// Swap Rows 
+			signed long int SwapRows(signed long int, signed long int, signed long int, unsigned char**);
 
-			// Determine Rank 
-			int			DetermineRank(int, int, int, unsigned char**);
+			/// Determine Rank 
+			signed long int DetermineRank(signed long int, signed long int, signed long int, unsigned char**);
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC RankTest();
 
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC RankTest(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~RankTest();
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests randomness of the BaseCryptoRandomStream and returns the random value
+			/// Tests randomness of the BaseCryptoRandomStream and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Initializes the object
+			/// Initializes the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC RandomTests GetType(void);
 
-			// Gets the minimum random stream length
-			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+			/// Gets the minimum random stream length
+			CLASS_DECLSPEC unsigned long int GetMinimumLength(void);
 
-			// Gets the "chiSquared" result
+			/// Gets the "chiSquared" result
 			CLASS_DECLSPEC double GetChiSquared(void);
 
-			// Gets the "matrixNumber" result
-			CLASS_DECLSPEC int GetMatrixNumber(void);
+			/// Gets the "matrixNumber" result
+			CLASS_DECLSPEC unsigned long int GetMatrixNumber(void);
 
-			// Gets the "bitsDiscarded" result
-			CLASS_DECLSPEC int GetBitsDiscarded(void);
+			/// Gets the "bitsDiscarded" result
+			CLASS_DECLSPEC unsigned long int GetBitsDiscarded(void);
 
-			// Gets the "p30" result
+			/// Gets the "p30" result
 			CLASS_DECLSPEC double GetP30(void);
 
-			// Gets the "p31" result
+			/// Gets the "p31" result
 			CLASS_DECLSPEC double GetP31(void);
 
-			// Gets the "p32" result
+			/// Gets the "p32" result
 			CLASS_DECLSPEC double GetP32(void);
 
-			// Gets the "f30" result
+			/// Gets the "f30" result
 			CLASS_DECLSPEC double GetF30(void);
 
-			// Gets the "f31" result
+			/// Gets the "f31" result
 			CLASS_DECLSPEC double GetF31(void);
 
-			// Gets the "f32" result
+			/// Gets the "f32" result
 			CLASS_DECLSPEC double GetF32(void);
 
 	};

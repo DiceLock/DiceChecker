@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -39,6 +39,7 @@
 #define isZero(x)            ((x) == 0.e0 ?   1 : 0)
 #define isOne(x)             ((x) == 1.e0 ?   1 : 0)
 
+
 namespace DiceLockSecurity {
 
   namespace RandomTest {
@@ -55,11 +56,11 @@ namespace DiceLockSecurity {
 	   private: 
 		
 		static const double MACHEP;	// 2**-53 
-		static const double MAXLOG;		// log(MAXNUM) 
-		static const double MAXNUM;    // 2**1024*(1-MACHEP) 
+		static const double MAXLOG;	// log(MAXNUM) 
+		static const double MAXNUM; // 2**1024*(1-MACHEP) 
 		static const double PI;		// pi
-		static const double LOGPI;			// log(pi) 
-		static const double LS2PI;		//( log( sqrt( 2*pi ) ) 
+		static const double LOGPI;	// log(pi) 
+		static const double LS2PI;	//( log( sqrt( 2*pi ) ) 
 		static const double big;
 		static const double biginv;
 		// A[]: Stirling's formula expansion of log gamma
@@ -76,41 +77,41 @@ namespace DiceLockSecurity {
 
 	   public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC MathematicalFunctions();
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~MathematicalFunctions();
 
-			// Logarithm of gamma function
+			/// Logarithm of gamma function
 			CLASS_DECLSPEC double	LGamma(double);
 
-			// incomplete gamma function
+			/// incomplete gamma function
 			CLASS_DECLSPEC double	IGamma(double, double);
 			
-			// Complemented incomplete gamma integral
+			/// Complemented incomplete gamma integral
 			CLASS_DECLSPEC double	IGammaC(double, double);
 
-			// Evaluate polynomial of degree N
-			CLASS_DECLSPEC double	PolEvl(double,double *, int);
+			/// Evaluate polynomial of degree N
+			CLASS_DECLSPEC double	PolEvl(double, double *, signed long int);
 			
-			//                                          N
-			// Evaluate polynomial when coefficient of x  is 1.0.
-			CLASS_DECLSPEC double	P1Evl(double, double *, int);
+			///                                          N
+			/// Evaluate polynomial when coefficient of x  is 1.0.
+			CLASS_DECLSPEC double	P1Evl(double, double *, signed long int);
 			
-			// Error function in double precision 
+			/// Error function in double precision 
 			CLASS_DECLSPEC double	ErF(double);
 			
-			// Error function in double precision 
+			/// Error function in double precision 
 			CLASS_DECLSPEC double	ErFc(double);
 			
-			// Statistical Normal function
+			/// Statistical Normal function
 			CLASS_DECLSPEC double	 Normal(double);
 			
-			// Class common error handling member
-			CLASS_DECLSPEC int		GetError();
+			/// Class common error handling member
+			CLASS_DECLSPEC unsigned short int	GetError();
 
-			// Class common error handling member
+			/// Class common error handling member
 			CLASS_DECLSPEC MathematicalErrors GetMathError();
 	  };
   }

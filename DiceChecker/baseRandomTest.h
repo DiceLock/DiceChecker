@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -83,41 +83,41 @@ namespace DiceLockSecurity {
 
 		public:
 
-			// Constructor, default 
+			/// Constructor, default 
 			CLASS_DECLSPEC BaseRandomTest();
 
-			// Constructor with a MathematicalFunctions object instantiated 
+			/// Constructor with a MathematicalFunctions object instantiated 
 			CLASS_DECLSPEC BaseRandomTest(MathematicalFunctions *);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC virtual ~BaseRandomTest();
 
-			// Sets the BaseRandomTest alpha margin
+			/// Sets the BaseRandomTest alpha margin
 			CLASS_DECLSPEC void SetAlpha(double);
 
-			// Gets the BaseRandomTest alpha margin
+			/// Gets the BaseRandomTest alpha margin
 			CLASS_DECLSPEC double GetAlpha(void);
 
-			// Gets the BaseRandomTest pValue
+			/// Gets the BaseRandomTest pValue
 			CLASS_DECLSPEC double GetPValue(void);
 
-			// Gets the BaseRandomTest error of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest error of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC RandomTestErrors GetError(void);
 
-			// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
+			/// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Tests the BaseCryptoRandomStream executed and returns the random value
+			/// Tests the BaseCryptoRandomStream executed and returns the random value
 			CLASS_DECLSPEC virtual bool IsRandom(BaseCryptoRandomStream*) {return false;};
 
-			// Initialize the object
+			/// Initialize the object
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Gets the type of the object
+			/// Gets the type of the object
 			CLASS_DECLSPEC virtual RandomTests GetType(void) {return NotDefined;};
 
-			// Gets the minimum stream length 
-			CLASS_DECLSPEC virtual unsigned int GetMinimumLength(void) {return 0;};
+			/// Gets the minimum stream length 
+			CLASS_DECLSPEC virtual unsigned long int GetMinimumLength(void) {return 0;};
 	};
   }
 }

@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -40,7 +40,7 @@ namespace DiceLockSecurity {
 
 		protected:
 
-			// Points the first random test in the suite
+			/// Points the first random test in the suite
 			static const	RandomTests firstTest;
 
 			BaseRandomTest*			suite[NumberOfTests];
@@ -56,181 +56,189 @@ namespace DiceLockSecurity {
 
 		public:
 
-			// Constructor, default, initializes suite and instantiates MathematicalFunctions  
+			/// Constructor, default, initializes suite and instantiates MathematicalFunctions  
 			CLASS_DECLSPEC RandomTestSuite();
 
-			// Constructor, initializes suite and assigns MathematicalFunctions parameter
+			/// Constructor, initializes suite and assigns MathematicalFunctions parameter
 			CLASS_DECLSPEC RandomTestSuite(MathematicalFunctions*);
 
-			// Destructor
+			/// Destructor
 			CLASS_DECLSPEC ~RandomTestSuite();
 
 			// ADDING RANDOM TESTS
 			
-			// Adds a random test to the suite
+			/// Adds a random test to the suite
 			CLASS_DECLSPEC void Add(BaseRandomTest*);
 
-			// Creates and adds a random test to the suite based in the enumerated random tests
+			/// Creates and adds a random test to the suite based in the enumerated random tests
 			CLASS_DECLSPEC void Add(RandomTests);
 
-			// Creates and adds all random test to the suite
+			/// Creates and adds all random test to the suite
 			CLASS_DECLSPEC void AddAll(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddFrequencyTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddBlockFrequencyTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddRunsTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddLongestRunOfOnesTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddCumulativeSumForwardTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddCumulativeSumReverseTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddRankTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddUniversalTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddApproximateEntropyTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddSerialTest(void);
 
-			// Creates and adds the defined random test to the suite
+			/// Creates and adds the defined random test to the suite
 			CLASS_DECLSPEC void AddDiscreteFourierTransformTest(void);
 
 			// GETTING RANDOM TESTS
 			
-			// Gets a random test to the suite based in the enumerated random tests
+			/// Gets a random test to the suite based in the enumerated random tests
 			CLASS_DECLSPEC BaseRandomTest* GetRandomTest(RandomTests);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC FrequencyTest* GetFrequencyTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC BlockFrequencyTest* GetBlockFrequencyTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC RunsTest* GetRunsTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC LongestRunOfOnesTest* GetLongestRunOfOnesTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC CumulativeSumForwardTest* GetCumulativeSumForwardTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC CumulativeSumReverseTest* GetCumulativeSumReverseTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC RankTest* GetRankTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC UniversalTest* GetUniversalTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC ApproximateEntropyTest* GetApproximateEntropyTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC SerialTest* GetSerialTest(void);
 
-			// Gets the defined random test to the suite
+			/// Gets the defined random test to the suite
 			CLASS_DECLSPEC DiscreteFourierTransformTest* GetDiscreteFourierTransformTest(void);
 
 			// REMOVING RANDOM TESTS
 
-			// Removes a random test to the suite
+			/// Removes a random test to the suite
 			CLASS_DECLSPEC void Remove(BaseRandomTest*);
 
-			// Removes a random test to the suite based in the enumerated random tests
+			/// Removes a random test to the suite based in the enumerated random tests
 			CLASS_DECLSPEC void Remove(RandomTests);
 
-			// Removes all random test of the suite
+			/// Removes all random test of the suite
 			CLASS_DECLSPEC void RemoveAll(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveFrequencyTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveBlockFrequencyTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveRunsTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveLongestRunOfOnesTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveCumulativeSumForwardTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveCumulativeSumReverseTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveRankTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveUniversalTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveApproximateEntropyTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveSerialTest(void);
 
-			// Removes the defined random test to the suite
+			/// Removes the defined random test to the suite
 			CLASS_DECLSPEC void RemoveDiscreteFourierTransformTest(void);
 
 			// CHECKING RANDOMNESS
 
-			// Tests the BaseCryptoRandomStream untill an error is found with all instantiated random tests and returns the random value
+			/// Tests the BaseCryptoRandomStream untill an error is found with all instantiated random tests and returns the random value
 			CLASS_DECLSPEC bool IsRandom(BaseCryptoRandomStream*);
 
-			// Tests the BaseCryptoRandomStream with all instantiated random tests and returns the random value
+			/// Tests the BaseCryptoRandomStream with all instantiated random tests and returns the random value
 			CLASS_DECLSPEC bool TestRandom(BaseCryptoRandomStream*);
 
 			// INITIALIZE SUITE
 			
-			// Initializes all random tests in the suite
+			/// Initializes all random tests in the suite
 			CLASS_DECLSPEC void Initialize(void);
 
-			// Sets Alpha all random tests in the suite
+			/// Sets Alpha all random tests in the suite
 			CLASS_DECLSPEC void SetAlpha(double);
 
 			// GETTING SUITE RESULTS
 
-			// Gets the RandomTestSuite random state of the last executed BaseCryptoRandomStream
+			/// Gets the RandomTestSuite random state of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC bool IsRandom(void);
 
-			// Gets the number of Random Tests that contains the suite
+			/// Gets the number of Random Tests that contains the suite
 			CLASS_DECLSPEC int GetInstantiatedTests(void);
 
-			// Gets the failed random test in the RandomTestSuite
+			/// Gets the minimum random stream length in bits corresponding
+			/// to random number test with higher random stream length
+			CLASS_DECLSPEC unsigned int GetMinimumLength(void);
+
+			/// Gets the corresponding random number test 
+			/// with higher minimum random stream length in bits 
+			CLASS_DECLSPEC RandomTests GetMinimumLengthRandomTest(void);
+
+			/// Gets the failed random test in the RandomTestSuite
 			CLASS_DECLSPEC RandomTests GetNonRandomTest(void);
 
-			// Gets the RandomTestError error of the last executed BaseCryptoRandomStream
+			/// Gets the RandomTestError error of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC RandomTestErrors GetError(void);
 
-			// Gets the RandomTest that produced the error of the last executed BaseCryptoRandomStream
+			/// Gets the RandomTest that produced the error of the last executed BaseCryptoRandomStream
 			CLASS_DECLSPEC RandomTests GetErrorTest(void);
 
-			// Indicates if a random test object exists in the suite
+			/// Indicates if a random test object exists in the suite
 			CLASS_DECLSPEC bool Exist(RandomTests);
 
-			// Gets the first random test in the RandomTestSuite
+			/// Gets the first random test in the RandomTestSuite
 			CLASS_DECLSPEC RandomTests GetFirstTest(void);
 
-			// Gets the number of random tests that can be used in the RandomTestSuite
+			/// Gets the number of random tests that can be used in the RandomTestSuite
 			CLASS_DECLSPEC RandomTests GetMaximumNumberOfTests(void);
 	};
   }

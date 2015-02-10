@@ -1,8 +1,8 @@
 //
 // Creator:    http://www.dicelocksecurity.com
-// Version:    vers.4.0.0.1
+// Version:    vers.5.0.0.1
 //
-// Copyright © 2008-2010 DiceLock Security, LLC. All rigths reserved.
+// Copyright © 2008-2011 DiceLock Security, LLC. All rights reserved.
 //
 //                               DISCLAIMER
 //
@@ -35,43 +35,43 @@ namespace DiceLockSecurity {
 	// Random Test Class enumerator name
 	const RandomTests ApproximateEntropyTest::test = ApproximateEntropy;
 	// Random Test Class minimum stream length
-	const unsigned int	ApproximateEntropyTest::minimumLength = 1024;
+	const unsigned long int	ApproximateEntropyTest::minimumLength = 1024;
 
 	// Constructor, default 
 	ApproximateEntropyTest::ApproximateEntropyTest() {
 
-		blockLength = 0;
-		chiSquared = 0.0;
-		phi = 0.0;
-		phiPlusOne = 0.0;
-		apEn = 0.0;
-		blockSizeExceeded = false;		
-		maximumBlockSizeRecommended = 0;	 
+		this->blockLength = 10;
+		this->chiSquared = 0.0;
+		this->phi = 0.0;
+		this->phiPlusOne = 0.0;
+		this->apEn = 0.0;
+		this->blockSizeExceeded = false;		
+		this->maximumBlockSizeRecommended = 0;	 
 	}
 
 
 	// Constructor with a MathematicalFunctions object instantiated 
 	ApproximateEntropyTest::ApproximateEntropyTest(MathematicalFunctions* mathFuncObj) {
 
-		blockLength = 0;
-		chiSquared = 0.0;
-		phi = 0.0;
-		phiPlusOne = 0.0;
-		apEn = 0.0;
-		blockSizeExceeded = false;		
-		maximumBlockSizeRecommended = 0;	 
+		this->blockLength = 10;
+		this->chiSquared = 0.0;
+		this->phi = 0.0;
+		this->phiPlusOne = 0.0;
+		this->apEn = 0.0;
+		this->blockSizeExceeded = false;		
+		this->maximumBlockSizeRecommended = 0;	 
 	}
 
 	// Destructor
 	ApproximateEntropyTest::~ApproximateEntropyTest() {
 
-		blockLength = 0;
-		chiSquared = 0.0;
-		phi = 0.0;
-		phiPlusOne = 0.0;
-		apEn = 0.0;
-		blockSizeExceeded = false;		
-		maximumBlockSizeRecommended = 0;	 
+		this->blockLength = 0;
+		this->chiSquared = 0.0;
+		this->phi = 0.0;
+		this->phiPlusOne = 0.0;
+		this->apEn = 0.0;
+		this->blockSizeExceeded = false;		
+		this->maximumBlockSizeRecommended = 0;	 
 	}
 	
 	// Gets the BaseRandomTest random state of the last executed BaseCryptoRandomStream
@@ -82,10 +82,10 @@ namespace DiceLockSecurity {
 
 	// Tests the BaseCryptoRandomStream executed and returns the random value
 	bool ApproximateEntropyTest::IsRandom(BaseCryptoRandomStream* bitStream) {
-		int           i, j, k, r, blockSize;
-		int           powLen, index;
-		double        sum, numOfBlocks, ApEn[2];
-		unsigned int* P;
+		unsigned long int i, j, k, r;
+		unsigned long int powLen, index, blockSize;
+		unsigned long int* P;
+		double sum, numOfBlocks, ApEn[2];
 
 		if (bitStream->GetBitLength() < (unsigned long)this->GetMinimumLength()) {
 			this->error = InsufficientNumberOfBits;
@@ -101,23 +101,23 @@ namespace DiceLockSecurity {
     		return this->random ;
 		} 
 		r = 0;
-		for(blockSize = this->blockLength; blockSize <= this->blockLength+1; blockSize++) {
+		for ( blockSize = this->blockLength; blockSize <= this->blockLength+1; blockSize++ ) {
 			if (blockSize == 0) {
 				ApEn[0] = 0.00;
 				r++;
 			}
 			else {
 	    		numOfBlocks = (double)bitStream->GetBitLength();
-				powLen = (int)pow((long double)2,blockSize+1)-1;
-				if ((P = (unsigned int*)calloc(powLen,sizeof(unsigned int)))== NULL){
+				powLen = (int)pow((long double)2, (int)(blockSize+1))-1;
+				if ((P = (unsigned long int*)calloc(powLen,sizeof(unsigned long int)))== NULL){
 	        		this->error = InsufficientMemory;
 	        		this->random = false;
 					return this->random ;
 				}
-				for(i = 1; i < powLen-1; i++) P[i] = 0;
-				for(i = 0; i < numOfBlocks; i++) { 
+				for (i = 1; i < powLen-1; i++) P[i] = 0;
+				for (i = 0; i < numOfBlocks; i++) { 
 	        		k = 1;
-					for(j = 0; j < blockSize; j++) {
+					for (j = 0; j < blockSize; j++) {
 						if ((int)bitStream->GetBitPosition((i+j)%bitStream->GetBitLength()) == 0)
 							k *= 2;
 						else if ((int)bitStream->GetBitPosition((i+j)%bitStream->GetBitLength()) == 1)
@@ -126,8 +126,8 @@ namespace DiceLockSecurity {
 					P[k-1]++;
 				}
 				sum = 0.0;
-				index = (int)pow((long double)2,blockSize)-1;
-				for(i = 0; i < (int)pow((long double)2,blockSize); i++) {
+				index = (int)pow((long double)2, (int)blockSize) - 1;
+				for (i = 0; i < pow((long double)2, (int)blockSize); i++) {
 					if (P[index] > 0) sum += P[index]*log(P[index]/numOfBlocks);
 					index++;
 				}
@@ -141,7 +141,7 @@ namespace DiceLockSecurity {
 		this->phi = ApEn[0];
 		this->phiPlusOne = ApEn[1];
 		this->chiSquared = 2.0*bitStream->GetBitLength()*(log((long double)2) - this->apEn);
-		this->pValue = this->mathFuncs->IGammaC(pow((long double)2,this->blockLength-1),this->chiSquared/2.);
+		this->pValue = this->mathFuncs->IGammaC(pow((long double)2, (int)(this->blockLength-1)),this->chiSquared/2.);
 		if (_isnan(this->pValue)) {
 			this->pValue = 0;
 			this->error = MathematicianNAN;
@@ -162,12 +162,12 @@ namespace DiceLockSecurity {
 	void ApproximateEntropyTest::Initialize(void) {
 
 		BaseRandomTest::Initialize();
-		chiSquared = 0.0;
-		phi = 0.0;
-		phiPlusOne = 0.0;
-		apEn = 0.0;
-		blockSizeExceeded = false;		
-		maximumBlockSizeRecommended = 0;	 
+		this->chiSquared = 0.0;
+		this->phi = 0.0;
+		this->phiPlusOne = 0.0;
+		this->apEn = 0.0;
+		this->blockSizeExceeded = false;		
+		this->maximumBlockSizeRecommended = 0;	 
 	}
 
 	// Gets the type of the object
@@ -177,19 +177,19 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the minimum random stream length
-	unsigned int ApproximateEntropyTest::GetMinimumLength(void) {
+	unsigned long int ApproximateEntropyTest::GetMinimumLength(void) {
 
 		return this->minimumLength;
 	}
 
 	// Sets the "blockLength" param
-	void ApproximateEntropyTest::SetBlockLength(int blockLength) {
+	void ApproximateEntropyTest::SetBlockLength(unsigned long int blockLength) {
 
 		this->blockLength = blockLength;
 	}
 
 	// Gets the "blockLength" param
-	int ApproximateEntropyTest::GetBlockLength(void) {
+	unsigned long int ApproximateEntropyTest::GetBlockLength(void) {
 
 		return this->blockLength;
 	}
@@ -225,13 +225,13 @@ namespace DiceLockSecurity {
 	}
 
 	// Gets the "BlockSizeRecommended" result
-	unsigned int ApproximateEntropyTest::GetMaximumBlockSizeRecommended(void) {
+	unsigned long int ApproximateEntropyTest::GetMaximumBlockSizeRecommended(void) {
 
 		return this->maximumBlockSizeRecommended;
 	}
 
 	// Gets the "BlockSizeRecommended" for the indicated stream length
-	unsigned int ApproximateEntropyTest::MaximumBlockSizeRecommended(unsigned int length) {
+	unsigned long int ApproximateEntropyTest::MaximumBlockSizeRecommended(unsigned long int length) {
 
 		return MAX(1,(int)(log((long double)length)/log((long double)2)-2));
 	}
